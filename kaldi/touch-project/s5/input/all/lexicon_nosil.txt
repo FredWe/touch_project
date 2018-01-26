@@ -1,0 +1,293 @@
+LongPress longmid
+Hush all
+Click1 shortmid
+Click2 shortmid shortmid
+Click3 shortmid shortmid shortmid
+Clockwise1 short0 short1
+CounterClockwise1 short0 short11
+Clockwise1 short1 short2
+CounterClockwise1 short1 short0
+Clockwise1 short2 short3
+CounterClockwise1 short2 short1
+Clockwise1 short3 short4
+CounterClockwise1 short3 short2
+Clockwise1 short4 short5
+CounterClockwise1 short4 short3
+Clockwise1 short5 short6
+CounterClockwise1 short5 short4
+Clockwise1 short6 short7
+CounterClockwise1 short6 short5
+Clockwise1 short7 short8
+CounterClockwise1 short7 short6
+Clockwise1 short8 short9
+CounterClockwise1 short8 short7
+Clockwise1 short9 short10
+CounterClockwise1 short9 short8
+Clockwise1 short10 short11
+CounterClockwise1 short10 short9
+Clockwise1 short11 short0
+CounterClockwise1 short11 short10
+Clockwise2 short0 short1 short2
+CounterClockwise2 short0 short11 short10
+Clockwise2 short1 short2 short3
+CounterClockwise2 short1 short0 short11
+Clockwise2 short2 short3 short4
+CounterClockwise2 short2 short1 short0
+Clockwise2 short3 short4 short5
+CounterClockwise2 short3 short2 short1
+Clockwise2 short4 short5 short6
+CounterClockwise2 short4 short3 short2
+Clockwise2 short5 short6 short7
+CounterClockwise2 short5 short4 short3
+Clockwise2 short6 short7 short8
+CounterClockwise2 short6 short5 short4
+Clockwise2 short7 short8 short9
+CounterClockwise2 short7 short6 short5
+Clockwise2 short8 short9 short10
+CounterClockwise2 short8 short7 short6
+Clockwise2 short9 short10 short11
+CounterClockwise2 short9 short8 short7
+Clockwise2 short10 short11 short0
+CounterClockwise2 short10 short9 short8
+Clockwise2 short11 short0 short1
+CounterClockwise2 short11 short10 short9
+Clockwise3 short0 short1 short2 short3
+CounterClockwise3 short0 short11 short10 short9
+Clockwise3 short1 short2 short3 short4
+CounterClockwise3 short1 short0 short11 short10
+Clockwise3 short2 short3 short4 short5
+CounterClockwise3 short2 short1 short0 short11
+Clockwise3 short3 short4 short5 short6
+CounterClockwise3 short3 short2 short1 short0
+Clockwise3 short4 short5 short6 short7
+CounterClockwise3 short4 short3 short2 short1
+Clockwise3 short5 short6 short7 short8
+CounterClockwise3 short5 short4 short3 short2
+Clockwise3 short6 short7 short8 short9
+CounterClockwise3 short6 short5 short4 short3
+Clockwise3 short7 short8 short9 short10
+CounterClockwise3 short7 short6 short5 short4
+Clockwise3 short8 short9 short10 short11
+CounterClockwise3 short8 short7 short6 short5
+Clockwise3 short9 short10 short11 short0
+CounterClockwise3 short9 short8 short7 short6
+Clockwise3 short10 short11 short0 short1
+CounterClockwise3 short10 short9 short8 short7
+Clockwise3 short11 short0 short1 short2
+CounterClockwise3 short11 short10 short9 short8
+Clockwise4 short0 short1 short2 short3 short4
+CounterClockwise4 short0 short11 short10 short9 short8
+Clockwise4 short1 short2 short3 short4 short5
+CounterClockwise4 short1 short0 short11 short10 short9
+Clockwise4 short2 short3 short4 short5 short6
+CounterClockwise4 short2 short1 short0 short11 short10
+Clockwise4 short3 short4 short5 short6 short7
+CounterClockwise4 short3 short2 short1 short0 short11
+Clockwise4 short4 short5 short6 short7 short8
+CounterClockwise4 short4 short3 short2 short1 short0
+Clockwise4 short5 short6 short7 short8 short9
+CounterClockwise4 short5 short4 short3 short2 short1
+Clockwise4 short6 short7 short8 short9 short10
+CounterClockwise4 short6 short5 short4 short3 short2
+Clockwise4 short7 short8 short9 short10 short11
+CounterClockwise4 short7 short6 short5 short4 short3
+Clockwise4 short8 short9 short10 short11 short0
+CounterClockwise4 short8 short7 short6 short5 short4
+Clockwise4 short9 short10 short11 short0 short1
+CounterClockwise4 short9 short8 short7 short6 short5
+Clockwise4 short10 short11 short0 short1 short2
+CounterClockwise4 short10 short9 short8 short7 short6
+Clockwise4 short11 short0 short1 short2 short3
+CounterClockwise4 short11 short10 short9 short8 short7
+Clockwise5 short0 short1 short2 short3 short4 short5
+CounterClockwise5 short0 short11 short10 short9 short8 short7
+Clockwise5 short1 short2 short3 short4 short5 short6
+CounterClockwise5 short1 short0 short11 short10 short9 short8
+Clockwise5 short2 short3 short4 short5 short6 short7
+CounterClockwise5 short2 short1 short0 short11 short10 short9
+Clockwise5 short3 short4 short5 short6 short7 short8
+CounterClockwise5 short3 short2 short1 short0 short11 short10
+Clockwise5 short4 short5 short6 short7 short8 short9
+CounterClockwise5 short4 short3 short2 short1 short0 short11
+Clockwise5 short5 short6 short7 short8 short9 short10
+CounterClockwise5 short5 short4 short3 short2 short1 short0
+Clockwise5 short6 short7 short8 short9 short10 short11
+CounterClockwise5 short6 short5 short4 short3 short2 short1
+Clockwise5 short7 short8 short9 short10 short11 short0
+CounterClockwise5 short7 short6 short5 short4 short3 short2
+Clockwise5 short8 short9 short10 short11 short0 short1
+CounterClockwise5 short8 short7 short6 short5 short4 short3
+Clockwise5 short9 short10 short11 short0 short1 short2
+CounterClockwise5 short9 short8 short7 short6 short5 short4
+Clockwise5 short10 short11 short0 short1 short2 short3
+CounterClockwise5 short10 short9 short8 short7 short6 short5
+Clockwise5 short11 short0 short1 short2 short3 short4
+CounterClockwise5 short11 short10 short9 short8 short7 short6
+Clockwise6 short0 short1 short2 short3 short4 short5 short6
+CounterClockwise6 short0 short11 short10 short9 short8 short7 short6
+Clockwise6 short1 short2 short3 short4 short5 short6 short7
+CounterClockwise6 short1 short0 short11 short10 short9 short8 short7
+Clockwise6 short2 short3 short4 short5 short6 short7 short8
+CounterClockwise6 short2 short1 short0 short11 short10 short9 short8
+Clockwise6 short3 short4 short5 short6 short7 short8 short9
+CounterClockwise6 short3 short2 short1 short0 short11 short10 short9
+Clockwise6 short4 short5 short6 short7 short8 short9 short10
+CounterClockwise6 short4 short3 short2 short1 short0 short11 short10
+Clockwise6 short5 short6 short7 short8 short9 short10 short11
+CounterClockwise6 short5 short4 short3 short2 short1 short0 short11
+Clockwise6 short6 short7 short8 short9 short10 short11 short0
+CounterClockwise6 short6 short5 short4 short3 short2 short1 short0
+Clockwise6 short7 short8 short9 short10 short11 short0 short1
+CounterClockwise6 short7 short6 short5 short4 short3 short2 short1
+Clockwise6 short8 short9 short10 short11 short0 short1 short2
+CounterClockwise6 short8 short7 short6 short5 short4 short3 short2
+Clockwise6 short9 short10 short11 short0 short1 short2 short3
+CounterClockwise6 short9 short8 short7 short6 short5 short4 short3
+Clockwise6 short10 short11 short0 short1 short2 short3 short4
+CounterClockwise6 short10 short9 short8 short7 short6 short5 short4
+Clockwise6 short11 short0 short1 short2 short3 short4 short5
+CounterClockwise6 short11 short10 short9 short8 short7 short6 short5
+Clockwise7 short0 short1 short2 short3 short4 short5 short6 short7
+CounterClockwise7 short0 short11 short10 short9 short8 short7 short6 short5
+Clockwise7 short1 short2 short3 short4 short5 short6 short7 short8
+CounterClockwise7 short1 short0 short11 short10 short9 short8 short7 short6
+Clockwise7 short2 short3 short4 short5 short6 short7 short8 short9
+CounterClockwise7 short2 short1 short0 short11 short10 short9 short8 short7
+Clockwise7 short3 short4 short5 short6 short7 short8 short9 short10
+CounterClockwise7 short3 short2 short1 short0 short11 short10 short9 short8
+Clockwise7 short4 short5 short6 short7 short8 short9 short10 short11
+CounterClockwise7 short4 short3 short2 short1 short0 short11 short10 short9
+Clockwise7 short5 short6 short7 short8 short9 short10 short11 short0
+CounterClockwise7 short5 short4 short3 short2 short1 short0 short11 short10
+Clockwise7 short6 short7 short8 short9 short10 short11 short0 short1
+CounterClockwise7 short6 short5 short4 short3 short2 short1 short0 short11
+Clockwise7 short7 short8 short9 short10 short11 short0 short1 short2
+CounterClockwise7 short7 short6 short5 short4 short3 short2 short1 short0
+Clockwise7 short8 short9 short10 short11 short0 short1 short2 short3
+CounterClockwise7 short8 short7 short6 short5 short4 short3 short2 short1
+Clockwise7 short9 short10 short11 short0 short1 short2 short3 short4
+CounterClockwise7 short9 short8 short7 short6 short5 short4 short3 short2
+Clockwise7 short10 short11 short0 short1 short2 short3 short4 short5
+CounterClockwise7 short10 short9 short8 short7 short6 short5 short4 short3
+Clockwise7 short11 short0 short1 short2 short3 short4 short5 short6
+CounterClockwise7 short11 short10 short9 short8 short7 short6 short5 short4
+Clockwise8 short0 short1 short2 short3 short4 short5 short6 short7 short8
+CounterClockwise8 short0 short11 short10 short9 short8 short7 short6 short5 short4
+Clockwise8 short1 short2 short3 short4 short5 short6 short7 short8 short9
+CounterClockwise8 short1 short0 short11 short10 short9 short8 short7 short6 short5
+Clockwise8 short2 short3 short4 short5 short6 short7 short8 short9 short10
+CounterClockwise8 short2 short1 short0 short11 short10 short9 short8 short7 short6
+Clockwise8 short3 short4 short5 short6 short7 short8 short9 short10 short11
+CounterClockwise8 short3 short2 short1 short0 short11 short10 short9 short8 short7
+Clockwise8 short4 short5 short6 short7 short8 short9 short10 short11 short0
+CounterClockwise8 short4 short3 short2 short1 short0 short11 short10 short9 short8
+Clockwise8 short5 short6 short7 short8 short9 short10 short11 short0 short1
+CounterClockwise8 short5 short4 short3 short2 short1 short0 short11 short10 short9
+Clockwise8 short6 short7 short8 short9 short10 short11 short0 short1 short2
+CounterClockwise8 short6 short5 short4 short3 short2 short1 short0 short11 short10
+Clockwise8 short7 short8 short9 short10 short11 short0 short1 short2 short3
+CounterClockwise8 short7 short6 short5 short4 short3 short2 short1 short0 short11
+Clockwise8 short8 short9 short10 short11 short0 short1 short2 short3 short4
+CounterClockwise8 short8 short7 short6 short5 short4 short3 short2 short1 short0
+Clockwise8 short9 short10 short11 short0 short1 short2 short3 short4 short5
+CounterClockwise8 short9 short8 short7 short6 short5 short4 short3 short2 short1
+Clockwise8 short10 short11 short0 short1 short2 short3 short4 short5 short6
+CounterClockwise8 short10 short9 short8 short7 short6 short5 short4 short3 short2
+Clockwise8 short11 short0 short1 short2 short3 short4 short5 short6 short7
+CounterClockwise8 short11 short10 short9 short8 short7 short6 short5 short4 short3
+Clockwise9 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9
+CounterClockwise9 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3
+Clockwise9 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10
+CounterClockwise9 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4
+Clockwise9 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11
+CounterClockwise9 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5
+Clockwise9 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0
+CounterClockwise9 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6
+Clockwise9 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1
+CounterClockwise9 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7
+Clockwise9 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2
+CounterClockwise9 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8
+Clockwise9 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3
+CounterClockwise9 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9
+Clockwise9 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4
+CounterClockwise9 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10
+Clockwise9 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5
+CounterClockwise9 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11
+Clockwise9 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6
+CounterClockwise9 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0
+Clockwise9 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7
+CounterClockwise9 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1
+Clockwise9 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8
+CounterClockwise9 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2
+Clockwise10 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10
+CounterClockwise10 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2
+Clockwise10 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11
+CounterClockwise10 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3
+Clockwise10 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0
+CounterClockwise10 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4
+Clockwise10 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1
+CounterClockwise10 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5
+Clockwise10 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2
+CounterClockwise10 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6
+Clockwise10 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3
+CounterClockwise10 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7
+Clockwise10 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4
+CounterClockwise10 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8
+Clockwise10 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5
+CounterClockwise10 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9
+Clockwise10 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6
+CounterClockwise10 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10
+Clockwise10 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7
+CounterClockwise10 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11
+Clockwise10 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8
+CounterClockwise10 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0
+Clockwise10 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9
+CounterClockwise10 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1
+Clockwise11 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11
+CounterClockwise11 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1
+Clockwise11 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0
+CounterClockwise11 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2
+Clockwise11 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1
+CounterClockwise11 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3
+Clockwise11 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2
+CounterClockwise11 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4
+Clockwise11 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3
+CounterClockwise11 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5
+Clockwise11 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4
+CounterClockwise11 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6
+Clockwise11 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5
+CounterClockwise11 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7
+Clockwise11 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6
+CounterClockwise11 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8
+Clockwise11 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7
+CounterClockwise11 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9
+Clockwise11 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8
+CounterClockwise11 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10
+Clockwise11 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9
+CounterClockwise11 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11
+Clockwise11 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10
+CounterClockwise11 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0
+Clockwise12 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0
+CounterClockwise12 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0
+Clockwise12 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1
+CounterClockwise12 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1
+Clockwise12 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2
+CounterClockwise12 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2
+Clockwise12 short3 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3
+CounterClockwise12 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4 short3
+Clockwise12 short4 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4
+CounterClockwise12 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5 short4
+Clockwise12 short5 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5
+CounterClockwise12 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6 short5
+Clockwise12 short6 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6
+CounterClockwise12 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7 short6
+Clockwise12 short7 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7
+CounterClockwise12 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8 short7
+Clockwise12 short8 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8
+CounterClockwise12 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9 short8
+Clockwise12 short9 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9
+CounterClockwise12 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10 short9
+Clockwise12 short10 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10
+CounterClockwise12 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11 short10
+Clockwise12 short11 short0 short1 short2 short3 short4 short5 short6 short7 short8 short9 short10 short11
+CounterClockwise12 short11 short10 short9 short8 short7 short6 short5 short4 short3 short2 short1 short0 short11

@@ -1,0 +1,6 @@
+<SIL> SIL
+LongPress longmid
+Hush all
+Click1 s1
+Click2 s2
+Click3 s3

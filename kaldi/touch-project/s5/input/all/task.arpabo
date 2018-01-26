@@ -1,0 +1,39 @@
+\data\
+ngram 1=31
+
+\1-grams:
+
+-1 Click1
+-1 Click2
+-1 Click3
+-1 Clockwise1
+-1 Clockwise10
+-1 Clockwise11
+-1 Clockwise12
+-1 Clockwise2
+-1 Clockwise3
+-1 Clockwise4
+-1 Clockwise5
+-1 Clockwise6
+-1 Clockwise7
+-1 Clockwise8
+-1 Clockwise9
+-1 CounterClockwise1
+-1 CounterClockwise10
+-1 CounterClockwise11
+-1 CounterClockwise12
+-1 CounterClockwise2
+-1 CounterClockwise3
+-1 CounterClockwise4
+-1 CounterClockwise5
+-1 CounterClockwise6
+-1 CounterClockwise7
+-1 CounterClockwise8
+-1 CounterClockwise9
+-1 Hush
+-1 LongPress
+-99 <s>
+-1 </s>
+
+\end\
+

@@ -1,0 +1,4 @@
+Hush all
+Click1 shortmid
+Click2 shortmid shortmid
+Click3 shortmid shortmid shortmid
