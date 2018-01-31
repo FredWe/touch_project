@@ -272,7 +272,7 @@ def main():
 
     data_process.terminate()
     draw_process.terminate()
-    print('Program quit')
+    print('退出')
 
 if __name__ == '__main__':
     main()

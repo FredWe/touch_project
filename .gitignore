@@ -1,5 +1,6 @@
-# bak files
+# other files
 *~
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
