@@ -37,11 +37,12 @@ BUTTONS_DICT = {
     'button-leftdown': '[2]',
     'button-rightdown': '[10]'}
 PRONOUNCE_DICT = {
-    'HUSH': 'hashi',
+    'HUSH': 'ha4shi',
     '10': '十',
     '11': '十一',
     '12': '十二',
-    ']-[': '到'}
+    ']-[': '到',
+    '逆时针': 'ni4时针'}
 ROUNDLEN = 12
 SAMPLEN = 6
 SLIDE_SAMPLEN = 2
