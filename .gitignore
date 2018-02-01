@@ -1,7 +1,9 @@
 # other files
-*~
+**~
 **.vscode/
-
+config_serial.json
+**.actionlist
+recording/data/
 
 # Byte-compiled / optimized / DLL files
 **__pycache__/

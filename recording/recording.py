@@ -11,9 +11,11 @@ import random
 import multiprocessing
 import time
 import logging
-import serial
 import json
 import subprocess
+import termios
+import tty
+import serial
 
 import plotter
 
@@ -86,11 +88,10 @@ def delayout(stateq, nameq, dataq):
     while True:
         rawline = ser.readline().strip()
         dataq.put_nowait(rawline)
-        #print('delayout: ' + ret)
-        #print(state)
+        logging.debug(state)
         if not stateq.empty():
             stateqs = stateq.get_nowait()
-            print('stateq get: ' + stateqs)
+            logging.info('stateq get: ' + stateqs)
             if stateqs == STARTCMD:
                 filedata.clear()
                 filedata.append(rawline)
@@ -101,13 +102,13 @@ def delayout(stateq, nameq, dataq):
                 endtime = time.time()
                 state['recording'] = False
                 state['naming'] = True
-            print(state)
+            logging.info(state)
 
         if not nameq.empty():
             nameqs = nameq.get_nowait()
-            print('nameq get')#: ' + nameqs)
+            logging.info('nameq get')#: ' + nameqs)
             filename = nameqs
-            print(state)
+            logging.info(state)
 
         if state['recording']:
             filedata.append(rawline)
@@ -226,15 +227,25 @@ def translate_by_dicts(origstr, *manydicts):
             newstr = newstr.replace(origword, onedict[origword])
     return newstr
 
-def pronounce(str):
-    cmdstr = "spd-say -r +20 -l 'zh' -t 'male2' '%s'" % str
-    proc = subprocess.Popen(cmdstr, shell=True)
+def pronounce(instr):
+    cmdstr = "spd-say -r +20 -l 'zh' '%s'" % instr
+    _ = subprocess.Popen(cmdstr, shell=True)
+
+def getch():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
 
 def main():
     """
     main function
     """
-    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
     state_queue = multiprocessing.Queue(1)
     name_queue = multiprocessing.Queue(1)
     data_queue = multiprocessing.Queue()
@@ -259,14 +270,19 @@ def main():
         logging.debug(pronounce_str)
         pronounce(pronounce_str)
         print(
-            '[!] 按 %s <Enter> 之后, 请做以下动作: [\033[30;103m %s \033[0m]' %
+            '[!] 按 %s 之后, 请做以下动作: [\033[30;103m %s \033[0m]' %
             (STARTCMD, actstr))
         print(
-            '[-] 做完动作之后，按 %s <Enter> 保存。按 %s <Enter> 退出' %
+            '[-] 做完动作之后，按 %s 保存。按 %s 退出' %
             (ENDCMD, QUITCMD))
+        print('main: input --> ', end='')
+        sys.stdout.flush()
         while True:
-            instr = input('main: input --> ')
-            print('main: ' + instr)
+            instr = getch()
+            print(instr)
+            print('main: input --> ', end='')
+            sys.stdout.flush()
+            logging.info('main: ' + instr)
             if instr == QUITCMD:
                 break
             elif instr == STARTCMD:
@@ -275,9 +291,6 @@ def main():
                 name_queue.put_nowait(val)
                 state_queue.put_nowait(instr)
                 break
-            else:
-                #nameq.put_nowait(instr)
-                pass
 
         if instr == QUITCMD: # let QUITCMD break to the most outer loop
             break
