@@ -48,9 +48,9 @@ PRONOUNCE_DICT = {
 ROUNDLEN = 12
 SAMPLEN = 6
 SLIDE_SAMPLEN = 2
-STARTCMD = 's'
-ENDCMD = 'e'
-QUITCMD = 'q'
+STARTKEY = 's'
+ENDKEY = 'e'
+QUITKEY = 'q'
 DATA_BASEDIR = 'data'
 CONFIG_FILENAME = 'config_serial.json'
 
@@ -92,13 +92,13 @@ def delayout(stateq, nameq, dataq):
         if not stateq.empty():
             stateqs = stateq.get_nowait()
             logging.info('stateq get: ' + stateqs)
-            if stateqs == STARTCMD:
+            if stateqs == STARTKEY:
                 filedata.clear()
                 filedata.append(rawline)
                 starttime = time.time()
                 state['recording'] = True
                 state['naming'] = False
-            elif stateqs == ENDCMD:
+            elif stateqs == ENDKEY:
                 endtime = time.time()
                 state['recording'] = False
                 state['naming'] = True
@@ -262,7 +262,7 @@ def main():
     actions = actionlist(USERNAME)
     #print(actions)
 
-    instr = ''
+    inkey = ''
     idx = None
     for idx, val in enumerate(actions):
         actstr = translate_by_dicts(val.split('_')[1], GESTURES_DICT, BUTTONS_DICT)
@@ -271,34 +271,34 @@ def main():
         pronounce(pronounce_str)
         print(
             '[!] 按 %s 之后, 请做以下动作: [\033[30;103m %s \033[0m]' %
-            (STARTCMD, actstr))
+            (STARTKEY, actstr))
         print(
             '[-] 做完动作之后，按 %s 保存。按 %s 退出' %
-            (ENDCMD, QUITCMD))
+            (ENDKEY, QUITKEY))
         print('main: input --> ', end='')
         sys.stdout.flush()
         while True:
-            instr = getch()
-            print(instr)
+            inkey = getch()
+            print(inkey)
             print('main: input --> ', end='')
             sys.stdout.flush()
-            logging.info('main: ' + instr)
-            if instr == QUITCMD:
+            logging.info('main: ' + inkey)
+            if inkey == QUITKEY:
                 break
-            elif instr == STARTCMD:
-                state_queue.put_nowait(instr)
-            elif instr == ENDCMD:
+            elif inkey == STARTKEY:
+                state_queue.put_nowait(inkey)
+            elif inkey == ENDKEY:
                 name_queue.put_nowait(val)
-                state_queue.put_nowait(instr)
+                state_queue.put_nowait(inkey)
                 break
 
-        if instr == QUITCMD: # let QUITCMD break to the most outer loop
+        if inkey == QUITKEY: # let QUITKEY break to the most outer loop
             break
 
         time.sleep(.1) # add a delay to make display in more natural order
 
     with open('%s.actionlist' % USERNAME, 'w') as file_actionlist:
-        if instr == QUITCMD:
+        if inkey == QUITKEY:
             file_actionlist.write('\n'.join(actions[idx:]))
 
     data_process.terminate()
