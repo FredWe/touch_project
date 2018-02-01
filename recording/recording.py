@@ -13,13 +13,14 @@ import time
 import logging
 import serial
 import json
+import subprocess
 
 import plotter
 
 GESTURES_DICT = {
     'click': '单击',
-    'double-click': '双击',
-    'longpress': '长按',
+    'double-click': '双击小鸟',
+    'longpress': '长按小鸟',
     'hush': 'HUSH',
     'shorthush': '轻拍',
     'double-shorthush': '轻拍两下',
@@ -35,6 +36,9 @@ BUTTONS_DICT = {
     'button-rightup': '[8]',
     'button-leftdown': '[2]',
     'button-rightdown': '[10]'}
+PRONOUNCE_DICT = {
+    'HUSH': 'HASH',
+    '[10]': '[十]'}
 ROUNDLEN = 12
 SAMPLEN = 6
 SLIDE_SAMPLEN = 2
@@ -207,20 +211,26 @@ def actionlist(username):
             for ind, item in enumerate(action_list)]
     return action_list
 
-def cntranslate(origstr, manydicts):
+def translate_by_dicts(origstr, *manydicts):
     """
     return replaced string by many dicts
     """
     newstr = origstr
     for onedict in manydicts:
+        logging.debug(onedict)
         for origword in sorted(onedict.keys(), key=len, reverse=True):
             newstr = newstr.replace(origword, onedict[origword])
     return newstr
+
+def pronounce(str):
+    cmdstr = "spd-say -i +100 -r +30 -l 'zh' -t 'female1' '%s'" % str
+    proc = subprocess.Popen(cmdstr, shell=True)
 
 def main():
     """
     main function
     """
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
     state_queue = multiprocessing.Queue(1)
     name_queue = multiprocessing.Queue(1)
     data_queue = multiprocessing.Queue()
@@ -240,9 +250,13 @@ def main():
     instr = ''
     idx = None
     for idx, val in enumerate(actions):
+        actstr = translate_by_dicts(val.split('_')[1], GESTURES_DICT, BUTTONS_DICT)
+        pronounce_str = translate_by_dicts(actstr, PRONOUNCE_DICT)
+        logging.debug(pronounce_str)
+        pronounce(pronounce_str)
         print(
             '[!] 按 %s <Enter> 之后, 请做以下动作: [\033[30;103m %s \033[0m]' %
-            (STARTCMD, cntranslate(val.split('_')[1], (GESTURES_DICT, BUTTONS_DICT))))
+            (STARTCMD, actstr))
         print(
             '[-] 做完动作之后，按 %s <Enter> 保存。按 %s <Enter> 退出' %
             (ENDCMD, QUITCMD))
