@@ -2,9 +2,9 @@ import numpy as np
 import logging
 import kaldi_io
 import sys
+import argparse
 
 NPAD = 15
-ARKFILENAME = 'feats_train.ark'
 
 def parsefile2raw(filepath):
     data = np.zeros((0, NPAD))
@@ -42,15 +42,21 @@ def loadscp(scppath):
     return scpdict
 
 def main():
-    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
-    if len(sys.argv) < 2:
-        logging.error('no scp filepath given')
-    SCP_FILEPATH = sys.argv[1]
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
+    parser = argparse.ArgumentParser(
+        description="load .rec rawfile from first argument SCPPATH, \
+            and convert all rec to scpfile-contained-utterence-id-indexed ark file to ARKPATH")
+    parser.add_argument("SCPPATH", help="scp file path")
+    parser.add_argument("ARKPATH", help="ark file path")
+    args = parser.parse_args()
+    logging.debug(args)
+    SCP_FILEPATH = args.SCPPATH
+    ARK_FILEPATH = args.ARKPATH
     logging.debug(SCP_FILEPATH)
     uttid2recpath = loadscp(SCP_FILEPATH)
     logging.debug(uttid2recpath)
     dataset = loadata(uttid2recpath)
-    with kaldi_io.open_or_fd(ARKFILENAME,'wb') as f:
+    with kaldi_io.open_or_fd(ARK_FILEPATH,'wb') as f:
         for k, m in dataset.items():
             kaldi_io.write_mat(f, m, k)
 
