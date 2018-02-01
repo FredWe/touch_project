@@ -37,8 +37,11 @@ BUTTONS_DICT = {
     'button-leftdown': '[2]',
     'button-rightdown': '[10]'}
 PRONOUNCE_DICT = {
-    'HUSH': 'HASH',
-    '[10]': '[十]'}
+    'HUSH': 'hashi',
+    '10': '十',
+    '11': '十一',
+    '12': '十二',
+    ']-[': '到'}
 ROUNDLEN = 12
 SAMPLEN = 6
 SLIDE_SAMPLEN = 2
@@ -151,7 +154,7 @@ def slides(direction, username):
         startpos = random.randrange(ROUNDLEN)
         endpos = random.randrange(ROUNDLEN)
         slide_actions.append(
-            '%s_%s-%s-%s' % (username, direction, startpos, endpos))
+            '%s_%s-[%s]-[%s]' % (username, direction, startpos, endpos))
     random.shuffle(slide_actions)
     return slide_actions
 
@@ -223,7 +226,7 @@ def translate_by_dicts(origstr, *manydicts):
     return newstr
 
 def pronounce(str):
-    cmdstr = "spd-say -i +100 -r +30 -l 'zh' -t 'female1' '%s'" % str
+    cmdstr = "spd-say -r +20 -l 'zh' -t 'male2' '%s'" % str
     proc = subprocess.Popen(cmdstr, shell=True)
 
 def main():

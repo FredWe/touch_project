@@ -42,7 +42,7 @@ def loadscp(scppath):
     return scpdict
 
 def main():
-    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
     parser = argparse.ArgumentParser(
         description="load .rec rawfile from first argument SCPPATH, \
             and convert all rec to scpfile-contained-utterence-id-indexed ark file to ARKPATH")
@@ -52,6 +52,9 @@ def main():
     logging.debug(args)
     SCP_FILEPATH = args.SCPPATH
     ARK_FILEPATH = args.ARKPATH
+    if not ARK_FILEPATH.endswith('.ark') or not ARK_FILEPATH.endswith('.ark'):
+        logging.error('extension error')
+        exit()
     logging.debug(SCP_FILEPATH)
     uttid2recpath = loadscp(SCP_FILEPATH)
     logging.debug(uttid2recpath)
