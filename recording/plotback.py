@@ -12,8 +12,7 @@ import logging
 import numpy as np
 import matplotlib.pyplot as plt
 
-logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
-logging.debug(sys.argv)
+
 NSIGS = 17
 NPAD = 15
 NCLICKER = 3
@@ -84,7 +83,7 @@ def plot_rawvalues(data):
             axes[i].plot(dat[:, i], '-+')
             axes[i].set_ylabel(i)
             # minprc, maxprc = 0, 100
-            minprc, maxprc = 2, 100
+            minprc, maxprc = 1, 100
             ymin = np.percentile(dat[:, i], minprc)
             ymax = np.percentile(dat[:, i], maxprc)
             axes[i].set_ylim(ymin, ymax)
@@ -93,6 +92,8 @@ def main():
     """
     main function
     """
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
+    logging.debug(sys.argv)
     # Data for plotting
     data = np.zeros((1, 15))
     rawdata = np.zeros((1, 30))
@@ -113,8 +114,8 @@ def main():
 
     print(data[:, 1].shape)
 
-    plot_values(data)
-    # plot_rawvalues(rawdata)
+    # plot_values(data)
+    plot_rawvalues(rawdata)
     plt.show()
 
 if __name__ == '__main__':
