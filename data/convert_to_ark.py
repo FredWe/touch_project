@@ -52,7 +52,7 @@ def main():
     logging.debug(args)
     SCP_FILEPATH = args.SCPPATH
     ARK_FILEPATH = args.ARKPATH
-    if not ARK_FILEPATH.endswith('.ark') or not ARK_FILEPATH.endswith('.ark'):
+    if not ARK_FILEPATH.endswith('.ark') or not SCP_FILEPATH.endswith('.scp'):
         logging.error('extension error')
         exit()
     logging.debug(SCP_FILEPATH)

@@ -4,6 +4,7 @@
 config_serial.json
 **.actionlist
 recording/data/
+**__ignore__/
 
 # Byte-compiled / optimized / DLL files
 **__pycache__/

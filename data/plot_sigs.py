@@ -14,8 +14,6 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
-logging.debug(sys.argv)
 NSIGS = 17
 NPAD = 15
 NCLICKER = 3
@@ -46,8 +44,12 @@ def treatline(line):
 def plot_rawvalues(data, fname):
     raws = data[:, ::2]
     bslns = data[:, 1::2]
-    for name, dat in {'raw': raws, 'baseline': bslns}.items():
-        for minprc, maxprc in ((2, 98), (0, 100)):
+    # plotname2data = {'raw': raws, 'baseline': bslns}
+    plotname2data = {'raw': raws}
+    # plotranges = ((2, 98), (0, 100))
+    plotranges = ((2, 98),)
+    for name, dat in plotname2data.items():
+        for minprc, maxprc in plotranges:
             fig = plt.figure()
             axes = fig.subplots(dat.shape[1])
             for i in range(dat.shape[1]):
@@ -72,7 +74,9 @@ def main():
     """
     main function
     """
-    DATA_FILENAMES = glob.glob('*/*.rec')
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
+    logging.debug(sys.argv)
+    DATA_FILENAMES = glob.glob('/run/user/1000/gvfs/smb-share:server=192.168.20.102,share=share/Department/AP/data55_outofslide/**/*.rec')
     for onef in DATA_FILENAMES:
         data = np.zeros((1, 15))
         rawdata = np.zeros((1, 30))
@@ -90,8 +94,8 @@ def main():
         prefix = os.path.basename(onef).split('_')[1]
         if prefix.startswith('Slide'):
             continue
-        # plot_rawvalues(rawdata, os.path.basename(onef))
-        plot_values(data, os.path.basename(onef))
+        plot_rawvalues(rawdata, os.path.basename(onef))
+        # plot_values(data, os.path.basename(onef))
         # break
 
 if __name__ == '__main__':
