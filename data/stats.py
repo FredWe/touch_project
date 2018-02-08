@@ -19,5 +19,5 @@ def main():
     plot_helper.hist_values(filt_alldata)
 
 if __name__ == '__main__':
-    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
     main()
