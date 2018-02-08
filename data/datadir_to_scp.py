@@ -3,6 +3,11 @@ import logging
 import argparse
 import os
 
+def path2uttid(path):
+    PRE1, PRE2 = '[', ']'
+    parr = os.path.basename(path.replace(PRE1, '').replace(PRE2, '')).split('_')
+    return '_'.join(parr[:len(parr) - 1])
+
 def main():
     logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
     parser = argparse.ArgumentParser(
@@ -19,8 +24,6 @@ def main():
         exit()
     logging.debug(SCP_FILEPATH)
     recfiles = glob.glob(os.path.join(DATA_FILEPATH, '**', '*.rec'), recursive=True)
-    parr = lambda path: os.path.basename(path).split('_')
-    path2uttid = lambda path: '_'.join(parr(path)[:len(parr(path)) - 1])
     scps = ('%s %s' % (path2uttid(filepath), filepath) for filepath in recfiles)
     with open(SCP_FILEPATH, 'w') as fd:
         fd.write('\n'.join(scps))
