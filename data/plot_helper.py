@@ -5,6 +5,15 @@ import numpy as np
 NPAD = 15
 SCANRES = 14
 
+def plot_values(data, fname):
+    fig = plt.figure()
+    axes = fig.subplots(NPAD)#, sharey=True)
+    for i in range(NPAD):
+        axes[i].plot(data[:, i], '-+')
+        axes[i].set_ylabel(i)
+    plt.savefig('%s.png' % fname)
+    plt.close()
+
 def hist_values(data):
     fig = plt.figure()
     axes = fig.subplots(NPAD, sharex=True)
