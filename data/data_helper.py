@@ -1,4 +1,5 @@
 import numpy as np
+import scipy
 
 apply2data = lambda matdict, func: {
         key: func(data)
@@ -15,7 +16,7 @@ def percentile_scale(matdict, prcmin, prcmax):
     func = lambda data: np.clip(data, datamin, datamax)
     return apply2data(matdict, func)
 
-def normalize(matdict, log2=True):
+def normalize(matdict):
     alldata = np.concatenate(list(matdict.values()), axis=0)
     sigmas = np.std(alldata, axis=0)
     mus = np.mean(alldata, axis=0)
@@ -27,4 +28,8 @@ def minmax(matdict):
     datamax = np.amax(alldata, axis=0)
     datamin = np.amin(alldata, axis=0)
     func = lambda data: (data - datamin) / (datamax - datamin)
+    return apply2data(matdict, func)
+
+def medfilt(matdict, filtlen):
+    func = lambda data: scipy.signal.medfilt(data, (filtlen,1))
     return apply2data(matdict, func)
