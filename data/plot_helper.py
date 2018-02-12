@@ -14,12 +14,12 @@ def plot_values(data, fname):
     plt.savefig('%s.png' % fname)
     plt.close()
 
-def hist_values(data):
+def hist_values(data, ylogflag):
     fig = plt.figure()
     axes = fig.subplots(NPAD, sharex=True)
     for i in range(NPAD):
         #fig = plt.figure()
-        axes[i].hist(data[:, i], bins=512, log=True)
+        axes[i].hist(data[:, i], bins=512, log=ylogflag)
         axes[i].set_ylabel(i)
     plt.show()#block=False)
 

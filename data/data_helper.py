@@ -1,5 +1,5 @@
 import numpy as np
-import scipy
+import scipy.signal
 
 apply2data = lambda matdict, func: {
         key: func(data)
@@ -32,4 +32,8 @@ def minmax(matdict):
 
 def medfilt(matdict, filtlen):
     func = lambda data: scipy.signal.medfilt(data, (filtlen,1))
+    return apply2data(matdict, func)
+
+def stripcut(matdict, startlen, endlen):
+    func = lambda data: data[startlen:data.shape[0] - endlen,:]
     return apply2data(matdict, func)

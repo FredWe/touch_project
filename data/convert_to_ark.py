@@ -6,7 +6,7 @@ import argparse
 
 NPAD = 15
 
-def parsefile2raw(filepath):
+def parsefile(filepath, outtype='raw'):
     data = np.zeros((0, NPAD))
     #logging.debug(filepath)
     with open(filepath, 'r') as file_data:
@@ -17,26 +17,32 @@ def parsefile2raw(filepath):
             #logging.debug(rawbytes)
             if not rawbytes: # remove empty line
                 continue
-            rawsigs = [
-                int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)
-                for idx in range(NPAD)]
-            #logging.debug(rawsigs)
-            #logging.debug(np.array(rawsigs).shape)
-            data = np.append(data, [rawsigs], axis=0)
+            sigs = []
+            if outtype == 'raw':
+                sigs = [
+                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)
+                    for idx in range(NPAD)]
+            else:
+                sigs = [
+                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16) -
+                    int(rawbytes[idx * 4 + 2] + rawbytes[idx * 4 + 3], 16)
+                    for idx in range(NPAD)]
+            data = np.append(data, [sigs], axis=0)
     #logging.debug(data)
     #logging.debug(data.shape)
     return data
 
-def loadata(scpdict):
+def loaddata(scpdict, outtype='raw'):
     alldata = {}
     for uttid, recpath in scpdict.items():
-        alldata[uttid] = parsefile2raw(recpath)
+        alldata[uttid] = parsefile(recpath, outtype)
     return alldata
 
 def loadscp(scppath):
     scpdict = {}
     with open(scppath, 'r') as scpcontent:
         for line in scpcontent:
+            logging.debug(line)
             uttid, recpath = line.split()
             scpdict[uttid] = recpath
     return scpdict
@@ -58,7 +64,7 @@ def main():
     logging.debug(SCP_FILEPATH)
     uttid2recpath = loadscp(SCP_FILEPATH)
     logging.debug(uttid2recpath)
-    dataset = loadata(uttid2recpath)
+    dataset = loaddata(uttid2recpath, 'diff')
     with kaldi_io.open_or_fd(ARK_FILEPATH,'wb') as f:
         for k, m in dataset.items():
             kaldi_io.write_mat(f, m, k)
