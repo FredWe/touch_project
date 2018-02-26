@@ -37,3 +37,7 @@ def medfilt(matdict, filtlen):
 def stripcut(matdict, startlen, endlen):
     func = lambda data: data[startlen:data.shape[0] - endlen,:]
     return apply2data(matdict, func)
+
+def drop_negative(matdict, threshold, placehold_value):
+    func = lambda data: np.where(data > threshold, data, placehold_value)
+    return apply2data(matdict, func)

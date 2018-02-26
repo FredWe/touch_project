@@ -19,7 +19,7 @@ def hist_values(data, ylogflag):
     axes = fig.subplots(NPAD, sharex=True)
     for i in range(NPAD):
         #fig = plt.figure()
-        axes[i].hist(data[:, i], bins=512, log=ylogflag)
+        axes[i].hist(data[:, i], bins=(data.shape[0]//1024), log=ylogflag)
         axes[i].set_ylabel(i)
     plt.show()#block=False)
 

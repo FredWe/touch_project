@@ -24,6 +24,32 @@ def parsefile_rec2raw(filepath):
     logging.debug(data.shape)
     return data
 
+def parsefile(filepath, outtype='raw'):
+    data = np.zeros((0, NPAD))
+    #logging.debug(filepath)
+    with open(filepath, 'r') as file_data:
+        for line in file_data:
+            rawbytes = [
+                onebyte.zfill(2)
+                for onebyte in line.strip().split()]
+            #logging.debug(rawbytes)
+            if not rawbytes: # remove empty line
+                continue
+            sigs = []
+            if outtype == 'raw':
+                sigs = [
+                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)
+                    for idx in range(NPAD)]
+            else:
+                sigs = [
+                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16) -
+                    int(rawbytes[idx * 4 + 2] + rawbytes[idx * 4 + 3], 16)
+                    for idx in range(NPAD)]
+            data = np.append(data, [sigs], axis=0)
+    #logging.debug(data)
+    #logging.debug(data.shape)
+    return data
+
 def parsefile_ark2mat(filepath):
     return {
         k: m for k, m in
