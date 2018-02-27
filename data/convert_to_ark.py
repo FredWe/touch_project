@@ -3,6 +3,7 @@ import logging
 import kaldi_io
 import sys
 import argparse
+import io_helper
 
 NPAD = 15
 
@@ -38,15 +39,6 @@ def loaddata(scpdict, outtype='raw'):
         alldata[uttid] = parsefile(recpath, outtype)
     return alldata
 
-def loadscp(scppath):
-    scpdict = {}
-    with open(scppath, 'r') as scpcontent:
-        for line in scpcontent:
-            logging.debug(line)
-            uttid, recpath = line.split()
-            scpdict[uttid] = recpath
-    return scpdict
-
 def main():
     logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
     parser = argparse.ArgumentParser(
@@ -62,7 +54,7 @@ def main():
         logging.error('extension error')
         exit()
     logging.debug(SCP_FILEPATH)
-    uttid2recpath = loadscp(SCP_FILEPATH)
+    uttid2recpath = io_helper.loadscp(SCP_FILEPATH)
     logging.debug(uttid2recpath)
     dataset = loaddata(uttid2recpath, 'diff')
     with kaldi_io.open_or_fd(ARK_FILEPATH,'wb') as f:

@@ -85,6 +85,7 @@ def delayout(stateq, nameq, dataq):
     filename = ''
     starttime = 0
     endtime = 0
+    loginstants = []
     while True:
         rawline = ser.readline().strip()
         dataq.put_nowait(rawline)
@@ -96,6 +97,8 @@ def delayout(stateq, nameq, dataq):
                 filedata.clear()
                 filedata.append(rawline)
                 starttime = time.time()
+                loginstants.clear()
+                loginstants.append(time.time())
                 state['recording'] = True
                 state['naming'] = False
             elif stateqs == ENDKEY:
@@ -112,6 +115,7 @@ def delayout(stateq, nameq, dataq):
 
         if state['recording']:
             filedata.append(rawline)
+            loginstants.append(time.time())
         elif state['naming']:
             if not filedata:
                 filename = ''
@@ -123,8 +127,11 @@ def delayout(stateq, nameq, dataq):
                     (endtime - starttime))
                 with open(combined_filename, 'w') as file_data:
                     file_data.write('\n'.join(line.decode() for line in filedata))
+                with open(combined_filename.replace('.rec', '.log'), 'w') as file_data:
+                    file_data.write('\n'.join(str(ins) for ins in loginstants))
                 print('%s lines are saved with filename as %s' % (len(filedata), combined_filename))
                 filedata.clear()
+                loginstants.clear()
                 filename = ''
                 starttime = 0
                 endtime = 0
@@ -245,7 +252,7 @@ def main():
     """
     main function
     """
-    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
     state_queue = multiprocessing.Queue(1)
     name_queue = multiprocessing.Queue(1)
     data_queue = multiprocessing.Queue()

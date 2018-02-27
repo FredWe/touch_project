@@ -63,3 +63,15 @@ def outputfile_mat2ark(mat, filepath):
     with kaldi_io.open_or_fd(filepath,'wb') as f:
         for k, m in mat.items():
             kaldi_io.write_mat(f, m, k)
+
+def parse_dictfile(filepath):
+    retdict = {}
+    with open(filepath, 'r') as filecontent:
+        for line in filecontent:
+            logging.debug(line)
+            key, value = line.split()
+            retdict[key] = value
+    return retdict
+
+def loadscp(scppath):
+    return parse_dictfile(scppath)
