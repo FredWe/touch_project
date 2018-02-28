@@ -35,16 +35,22 @@ def parsefile(filepath, outtype='raw'):
             #logging.debug(rawbytes)
             if not rawbytes: # remove empty line
                 continue
-            sigs = []
-            if outtype == 'raw':
-                sigs = [
+            raws = [
                     int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)
                     for idx in range(NPAD)]
-            else:
-                sigs = [
-                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16) -
+            baselines = [
                     int(rawbytes[idx * 4 + 2] + rawbytes[idx * 4 + 3], 16)
                     for idx in range(NPAD)]
+            diffs = [
+                    raws[idx] - baselines[idx]
+                    for idx in range(NPAD)]
+            sigs = []
+            if outtype == 'raw':
+                sigs = raws
+            elif outtype == 'diff':
+                sigs = diffs
+            elif outtype == 'baseline':
+                sigs = baselines
             data = np.append(data, [sigs], axis=0)
     #logging.debug(data)
     #logging.debug(data.shape)

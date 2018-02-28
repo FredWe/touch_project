@@ -46,7 +46,7 @@ PRONOUNCE_DICT = {
     ']-[': '到',
     '逆时针': 'ni4时针'}
 ROUNDLEN = 12
-SAMPLEN = 6
+SAMPLEN = 10
 SLIDE_SAMPLEN = 2
 STARTKEY = 's'
 ENDKEY = 'e'
@@ -127,8 +127,8 @@ def delayout(stateq, nameq, dataq):
                     (endtime - starttime))
                 with open(combined_filename, 'w') as file_data:
                     file_data.write('\n'.join(line.decode() for line in filedata))
-                with open(combined_filename.replace('.rec', '.log'), 'w') as file_data:
-                    file_data.write('\n'.join(str(ins) for ins in loginstants))
+                # with open(combined_filename.replace('.rec', '.log'), 'w') as file_data:
+                #     file_data.write('\n'.join(str(ins) for ins in loginstants))
                 print('%s lines are saved with filename as %s' % (len(filedata), combined_filename))
                 filedata.clear()
                 loginstants.clear()

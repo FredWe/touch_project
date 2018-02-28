@@ -5,38 +5,10 @@ import sys
 import argparse
 import io_helper
 
-NPAD = 15
-
-def parsefile(filepath, outtype='raw'):
-    data = np.zeros((0, NPAD))
-    #logging.debug(filepath)
-    with open(filepath, 'r') as file_data:
-        for line in file_data:
-            rawbytes = [
-                onebyte.zfill(2)
-                for onebyte in line.strip().split()]
-            #logging.debug(rawbytes)
-            if not rawbytes: # remove empty line
-                continue
-            sigs = []
-            if outtype == 'raw':
-                sigs = [
-                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)
-                    for idx in range(NPAD)]
-            else:
-                sigs = [
-                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16) -
-                    int(rawbytes[idx * 4 + 2] + rawbytes[idx * 4 + 3], 16)
-                    for idx in range(NPAD)]
-            data = np.append(data, [sigs], axis=0)
-    #logging.debug(data)
-    #logging.debug(data.shape)
-    return data
-
 def loaddata(scpdict, outtype='raw'):
     alldata = {}
     for uttid, recpath in scpdict.items():
-        alldata[uttid] = parsefile(recpath, outtype)
+        alldata[uttid] = io_helper.parsefile(recpath, outtype)
     return alldata
 
 def main():
