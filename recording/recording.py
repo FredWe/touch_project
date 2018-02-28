@@ -252,7 +252,7 @@ def main():
     """
     main function
     """
-    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
+    logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
     state_queue = multiprocessing.Queue(1)
     name_queue = multiprocessing.Queue(1)
     data_queue = multiprocessing.Queue()

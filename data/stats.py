@@ -154,7 +154,7 @@ def kmeans_pca(X, name):
     print('explained variance ratio (first two components): %s'
         % str(pca.explained_variance_ratio_))
 
-    fig = plt.figure(figsize=(4 * 4, 3 * 4))
+    fig = plt.figure(figsize=(16, 12))
     # colors = ['navy', 'turquoise', 'darkorange']
     colors = ['blue', 'red']
     target_names = ['Class 0', 'Class 1']
@@ -205,7 +205,7 @@ def main():
         alldata = np.concatenate(list(filtered_arkmat.values()), axis=0)
         # kmeans_pca(alldata, name)
         K = 2
-        kmeans = KMeans(n_clusters=K, random_state=0).fit(alldata)   
+        kmeans = KMeans(n_clusters=K, random_state=0).fit(alldata)
         uttid, data = filtered_arkmat.popitem()
         plot_kmeans(data, uttid, kmeans)
     
