@@ -75,21 +75,6 @@ def plot_delta_zero_annotation(data, fname, **kw):
         plt.savefig('%s.png' % fname)
     plt.close()
 
-def plot_kmeans(data, fname, kmeans, **kw):
-    fig = plt.figure(figsize=(16, 12))
-    axes = fig.subplots(NPAD)#, sharey=True)
-    flg = False
-    centers_norm = np.linalg.norm(kmeans.cluster_centers_, axis=1)
-    sil_index = np.argmax(centers_norm)
-    labels = kmeans.predict(data)
-    for i in range(NPAD):
-        ploted = data[:, i]
-        axes[i].plot(ploted, '-+')
-        axes[i].plot(np.arange(len(ploted))[labels == sil_index], ploted[labels == sil_index], 'r+')
-        axes[i].set_ylabel(i)
-    plt.savefig('%s.png' % fname)
-    plt.close()
-
 def plot_pca(X):
     import matplotlib.pyplot as plt
     from sklearn.decomposition import PCA
@@ -184,6 +169,7 @@ def main():
         '_double-click_',
         '_longpress_']
     arkmat = io_helper.parsefile_ark2mat(sys.argv[1])
+    utt2word = io_helper.parse_dictfile(sys.argv[2])
     
     arkmat = data_helper.medfilt(arkmat, 3)
     arkmat = data_helper.stripcut(arkmat, 3, 3)
@@ -193,29 +179,29 @@ def main():
     logging.info('std:\n%s' % datastds)
     logging.info('mean:\n%s' % datameans)
 
+    arkmat = data_helper.silencecut(arkmat, utt2word, 10, 10)
+
     # arkmat = data_helper.normalize(arkmat)
     # arkmat = data_helper.minmax(arkmat)
-    # arkmat = data_helper.drop_negative(arkmat, 0, 0)
-    alldata = np.concatenate(list(arkmat.values()), axis=0)
+    # arkmat = data_helper.drop_negative(arkmat, -10, 0)
+    # alldata = np.concatenate(list(arkmat.values()), axis=0)
     # plot_helper.hist_values(alldata, True)
 
-    for name in action_names:
-        print(name)
-        filtered_arkmat = {k: m for k, m in arkmat.items() if name in k}
-        alldata = np.concatenate(list(filtered_arkmat.values()), axis=0)
-        # kmeans_pca(alldata, name)
-        K = 2
-        kmeans = KMeans(n_clusters=K, random_state=0).fit(alldata)
-        uttid, data = filtered_arkmat.popitem()
-        plot_kmeans(data, uttid, kmeans)
+    # for name in action_names:
+    #     print(name)
+    #     filtered_arkmat = {k: m for k, m in arkmat.items() if name in k}
+    #     alldata = np.concatenate(list(filtered_arkmat.values()), axis=0)
+    #     # kmeans_pca(alldata, name)
+    #     K = 2
+    #     kmeans = KMeans(n_clusters=K, random_state=0).fit(alldata)
+    #     uttid, data = filtered_arkmat.popitem()
+    #     plot_helper.plot_kmeans(data, uttid, kmeans)
     
-    # K = 2
-    # kmeans = KMeans(n_clusters=K, random_state=0).fit(alldata)
-    
+    # kmeans = KMeans(n_clusters=2, random_state=0).fit(alldata)
     # print(alldata.shape)
     # for uttid, data in arkmat.items():
     #     # plot_delta_zero_annotation(data, uttid)
-    #     plot_kmeans(data, uttid, kmeans)
+    #     plot_helper.plot_kmeans(data, uttid, kmeans)
 
 
 if __name__ == '__main__':

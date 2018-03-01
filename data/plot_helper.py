@@ -6,7 +6,7 @@ NPAD = 15
 SCANRES = 14
 
 def plot_values(data, fname):
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD)#, sharey=True)
     for i in range(NPAD):
         axes[i].plot(data[:, i], '-+')
@@ -15,7 +15,7 @@ def plot_values(data, fname):
     plt.close()
 
 def hist_values(data, ylogflag):
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD, sharex=True)
     for i in range(NPAD):
         #fig = plt.figure()
@@ -26,7 +26,7 @@ def hist_values(data, ylogflag):
 def hist_normpdf(data):
     s = np.std(data, axis=0)
     m = np.mean(data, axis=0)
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD, sharex=True)
     for i in range(NPAD):
         #fig = plt.figure()
@@ -36,3 +36,17 @@ def hist_normpdf(data):
         axes[i].plot(bins, y, '--')
     fig.tight_layout()
     plt.show()#block=False)
+
+def plot_kmeans(data, fname, kmeans, **kw):
+    fig = plt.figure(figsize=(16, 12))
+    axes = fig.subplots(NPAD)
+    centers_norm = np.linalg.norm(kmeans.cluster_centers_, axis=1)
+    nonsil_index = np.argmax(centers_norm)
+    labels = kmeans.predict(data)
+    for i in range(NPAD):
+        ploted = data[:, i]
+        axes[i].plot(ploted, '-+')
+        axes[i].plot(np.arange(len(ploted))[labels == nonsil_index], ploted[labels == nonsil_index], 'r+')
+        axes[i].set_ylabel(i)
+    plt.savefig('%s.png' % fname)
+    plt.close()

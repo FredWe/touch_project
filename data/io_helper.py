@@ -44,6 +44,7 @@ def parsefile(filepath, outtype='raw'):
             diffs = [
                     raws[idx] - baselines[idx]
                     for idx in range(NPAD)]
+            timers = [rawbytes[NPAD * 4]]
             sigs = []
             if outtype == 'raw':
                 sigs = raws
@@ -51,6 +52,8 @@ def parsefile(filepath, outtype='raw'):
                 sigs = diffs
             elif outtype == 'baseline':
                 sigs = baselines
+            elif outtype == 'timer':
+                sigs = timers
             data = np.append(data, [sigs], axis=0)
     #logging.debug(data)
     #logging.debug(data.shape)

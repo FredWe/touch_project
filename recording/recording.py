@@ -46,7 +46,7 @@ PRONOUNCE_DICT = {
     ']-[': '到',
     '逆时针': 'ni4时针'}
 ROUNDLEN = 12
-SAMPLEN = 10
+SAMPLEN = 6
 SLIDE_SAMPLEN = 2
 STARTKEY = 's'
 ENDKEY = 'e'
