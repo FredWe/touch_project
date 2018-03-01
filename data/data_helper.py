@@ -13,8 +13,7 @@ def apply2data(matdict, func):
             ret[key] = func(data)
         except Exception as e:
             print(key + ' cannot find silence')
-            # print(data)
-            # plot_helper.plot_values(data, key + '_diff')
+            ret[key] = data
     return ret
 matdict2alldata = lambda matdict: np.concatenate(list(matdict.values()), axis=0)
 
