@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Wedge
 from matplotlib.collections import PatchCollection
 from matplotlib.animation import FuncAnimation
+import collections
 
 def _pol2cart(rho, phi):
     """
@@ -22,6 +23,11 @@ def _pol2cart(rho, phi):
 
 def waitforbuttonpress():
     plt.waitforbuttonpress()
+
+def bytes_filter(byteline):
+    keptchars = '0123456789 ABCDEFabcdef'
+    delcharcodes = (x for x in range(256) if chr(x) not in keptchars)
+    return byteline.translate(None, bytes(delcharcodes))
 
 class Plotter(object):
     """
@@ -55,6 +61,7 @@ class Plotter(object):
         start data collection
         """
         rawline = dataq.get()
+        rawline = bytes_filter(rawline)
         rawbytes = rawline.split() # read data from queue
         #print(rawbytes)
         if len(rawbytes) != 63:
@@ -71,6 +78,9 @@ class Plotter(object):
         # concat high byte & low byte and convert from HEX to DEC
         sigs = [rawsigs[i] - rawsigs[i+1] for i in range(0, len(rawsigs) - 2, 2)] + rawsigs[-2:]
 
+        for i in range(15):
+            state['buf'][i].append(sigs[i])
+        sigs = [np.median(state['buf'][i]) for i in range(15)]
         state['min'] = [min(state['min'][i], sigs[i]) for i in range(15)]
         state['max'] = [max(state['max'][i], sigs[i]) for i in range(15)]
         colors = [
@@ -128,9 +138,12 @@ class Plotter(object):
                 fig, self.anim_update_static, frames=data['sigs'], fargs=(patch_collection, state),
                 interval=self.interval, repeat=False, blit=True)
         elif self.sourcetype == 'queue':
+            NPAD = 15
+            ringBuf = [collections.deque(maxlen=3) for i in range(NPAD)]
             state = {
-                'min': [0] * 15,
-                'max': [1] * 15
+                'min': [0] * NPAD,
+                'max': [1] * NPAD,
+                'buf': ringBuf
             }
 
             _ = FuncAnimation(

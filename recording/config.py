@@ -42,11 +42,17 @@ def process_bystate(ser, currstate):
         return Serstate.STATE_EXIT
 
 def config_by_serial(usbpath):
+    climit = 50
+    count = 0
     with serial.Serial(usbpath, baudrate=BAUDRATE, timeout=0.1) as ser:
         state = Serstate.STATE_INIT
         while state != Serstate.STATE_EXIT:
             state = process_bystate(ser, state)
             logging.debug(state)
+            count += 1
+            if count > climit:
+                print('没开机吧')
+                count = 0
 
 def main():
     logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)

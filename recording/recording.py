@@ -16,7 +16,7 @@ import subprocess
 import termios
 import tty
 import serial
-
+import speechd
 import plotter
 
 GESTURES_DICT = {
@@ -72,6 +72,11 @@ def checkdir(data_basedir):
 USERNAME, DATADIR = checkdir(DATA_BASEDIR)
 BAUDRATE, SERIAL_PATH = serial_config(CONFIG_FILENAME)
 
+def bytes_filter(byteline):
+    keptchars = '0123456789 ABCDEFabcdef'
+    delcharcodes = (x for x in range(256) if chr(x) not in keptchars)
+    return byteline.translate(None, bytes(delcharcodes))
+
 def delayout(stateq, nameq, dataq):
     """
     control recording start / end, real-time capturing sensor data
@@ -126,9 +131,15 @@ def delayout(stateq, nameq, dataq):
                     os.path.join(DATADIR, filename),
                     (endtime - starttime))
                 with open(combined_filename, 'w') as file_data:
-                    file_data.write('\n'.join(line.decode() for line in filedata))
-                # with open(combined_filename.replace('.rec', '.log'), 'w') as file_data:
-                #     file_data.write('\n'.join(str(ins) for ins in loginstants))
+                    file_data.write(
+                        '\n'.join(
+                            bytes_filter(line).decode()
+                            for line in filedata))
+                with open(combined_filename.replace('.rec', '.log'), 'w') as file_data:
+                    file_data.write(
+                        '\n'.join(
+                            str(ins)
+                            for ins in loginstants))
                 print('%s lines are saved with filename as %s' % (len(filedata), combined_filename))
                 filedata.clear()
                 loginstants.clear()
@@ -138,7 +149,7 @@ def delayout(stateq, nameq, dataq):
                 state['recording'] = False
                 state['naming'] = False
 
-def slides_coco(direction, username):
+def slides_foreachlen(direction, username):
     """
     generate randomly shuffled slides actions for each ROUNDLEN times SLIDE_SAMPLEN
     """
@@ -253,11 +264,14 @@ def main():
     main function
     """
     logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
+    spdclient = speechd.SSIPClient('test')
+    spdclient.set_language('zh')
+    spdclient.set_rate(20)
     state_queue = multiprocessing.Queue(1)
     name_queue = multiprocessing.Queue(1)
     data_queue = multiprocessing.Queue()
 
-    plter = plotter.Plotter(1, 'queue')
+    plter = plotter.Plotter(2, 'queue')
 
     data_process = multiprocessing.Process(
         target=delayout, args=(state_queue, name_queue, data_queue))
@@ -275,7 +289,7 @@ def main():
         actstr = translate_by_dicts(val.split('_')[1], GESTURES_DICT, BUTTONS_DICT)
         pronounce_str = translate_by_dicts(actstr, PRONOUNCE_DICT)
         logging.debug(pronounce_str)
-        pronounce(pronounce_str)
+        spdclient.speak(pronounce_str)#pronounce(pronounce_str)
         print(
             '[!] 按 %s 之后, 请做以下动作: [\033[30;103m %s \033[0m]' %
             (STARTKEY, actstr))
@@ -308,6 +322,10 @@ def main():
         if inkey == QUITKEY:
             file_actionlist.write('\n'.join(actions[idx:]))
 
+    spdclient.set_language('en')
+    spdclient.set_rate(0)
+    spdclient.speak('Game Over')
+    spdclient.close()
     data_process.terminate()
     draw_process.terminate()
     print('退出')

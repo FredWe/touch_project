@@ -20,7 +20,7 @@ def val2char(val, vmin, vmax):
     return ' '
 
 def plot_values_annotation(data, fname, **kw):
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD)#, sharey=True)
     flg = False
     for i in range(NPAD):
@@ -42,7 +42,7 @@ def plot_values_annotation(data, fname, **kw):
     plt.close()
 
 def plot_delta_zero_annotation(data, fname, **kw):
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD + 1)#, sharey=True)
     data = np.diff(data, axis=0)
     flg = False
@@ -87,9 +87,9 @@ def plot_pca(X):
     print('explained variance ratio (first two components): %s'
         % str(pca.explained_variance_ratio_))
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 12))
     # ax = Axes3D(fig)
-    # plt.figure()
+    # plt.figure(figsize=(16, 12))
     # colors = ['navy', 'turquoise', 'darkorange']
     # lw = .001
 
@@ -151,6 +151,9 @@ def kmeans_pca(X, name):
     plt.savefig('PCA-2means%s.png' % name)
     plt.close()
     # plt.show()
+
+def gmm_pca(X, name):
+    pass
 
 def main():
     action_names = [

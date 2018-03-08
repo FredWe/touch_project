@@ -20,7 +20,7 @@ NPAD = 15
 SCANRES = 14
 
 def plot_values(data, fname):
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD)#, sharey=True)
     for i in range(NPAD):
         axes[i].plot(data[:, i], '-+')
@@ -33,8 +33,10 @@ def main():
     main function
     """
     # Data for plotting
+    plt.rcParams['axes.formatter.useoffset'] = False
 
     arkmat = io_helper.parsefile_ark2mat(sys.argv[1])
+    arkmat = {k: m  for k, m in arkmat.items() if 'longpress' in k}
     arkmat = data_helper.medfilt(arkmat, 3)
     arkmat = data_helper.stripcut(arkmat, 3, 3)
 
