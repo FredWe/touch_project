@@ -24,7 +24,10 @@ def main():
         exit()
     logging.debug(SCP_FILEPATH)
     recfiles = glob.glob(os.path.join(DATA_FILEPATH, '**', '*.rec'), recursive=True)
-    scps = ('%s %s' % (path2uttid(filepath), filepath) for filepath in recfiles)
+    scps = (
+        '%s %s' % (path2uttid(filepath), filepath)
+        for filepath in recfiles
+        if os.path.getsize(filepath) > 0) # non-empty files
     with open(SCP_FILEPATH, 'w') as fd:
         fd.write('\n'.join(scps))
 

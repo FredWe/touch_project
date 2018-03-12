@@ -26,14 +26,15 @@ def parsefile_rec2raw(filepath):
 
 def parsefile(filepath, outtype='raw'):
     data = np.zeros((0, NPAD))
-    #logging.debug(filepath)
+    logging.debug(filepath)
     with open(filepath, 'r') as file_data:
         for line in file_data:
             rawbytes = [
                 onebyte.zfill(2)
                 for onebyte in line.strip().split()]
-            #logging.debug(rawbytes)
-            if not rawbytes: # remove empty line
+            logging.debug(rawbytes)
+            logging.debug(len(rawbytes))
+            if not rawbytes or len(rawbytes) != 63: # remove empty line
                 continue
             raws = [
                     int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)

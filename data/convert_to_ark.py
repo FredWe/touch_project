@@ -18,17 +18,19 @@ def main():
             and convert all rec to scpfile-contained-utterence-id-indexed ark file to ARKPATH")
     parser.add_argument("SCPPATH", help="scp file path")
     parser.add_argument("ARKPATH", help="ark file path")
+    parser.add_argument("OUTPUTTYPE", help="raw | diff | baseline")
     args = parser.parse_args()
     logging.debug(args)
     SCP_FILEPATH = args.SCPPATH
     ARK_FILEPATH = args.ARKPATH
+    OUTPUT_TYPE = args.OUTPUTTYPE
     if not ARK_FILEPATH.endswith('.ark') or not SCP_FILEPATH.endswith('.scp'):
         logging.error('extension error')
         exit()
     logging.debug(SCP_FILEPATH)
     uttid2recpath = io_helper.loadscp(SCP_FILEPATH)
     logging.debug(uttid2recpath)
-    dataset = loaddata(uttid2recpath, 'diff')
+    dataset = loaddata(uttid2recpath, OUTPUT_TYPE)
     with kaldi_io.open_or_fd(ARK_FILEPATH,'wb') as f:
         for k, m in dataset.items():
             kaldi_io.write_mat(f, m, k)
