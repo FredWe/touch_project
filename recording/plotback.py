@@ -8,7 +8,7 @@ __author__ = 'Fred Wei'
 import sys
 import re
 import logging
-
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -66,18 +66,17 @@ def treatline(line):
     return rawsigs, sigs
 
 def plot_values(data):
-    fig = plt.figure()
-    axes = fig.subplots(data.shape[1], sharey=True)
+    fig = plt.figure(figsize=(16, 12))
+    axes = fig.subplots(data.shape[1])
     for i in range(data.shape[1]):
         axes[i].plot(data[:, i], '-+')
         axes[i].set_ylabel(i)
-    #plt.show(block=False)
 
 def plot_rawvalues(data):
     raws = data[:, ::2]
     bslns = data[:, 1::2]
     for dat in raws, bslns:
-        fig = plt.figure()
+        fig = plt.figure(figsize=(16, 12))
         axes = fig.subplots(dat.shape[1])
         for i in range(dat.shape[1]):
             axes[i].plot(dat[:, i], '-+')
@@ -114,9 +113,11 @@ def main():
 
     print(data[:, 1].shape)
 
-    # plot_values(data)
-    plot_rawvalues(rawdata)
-    plt.show()
+    plot_values(data) # plot diff signals
+    # plot_rawvalues(rawdata) # plot raw & baselines
+    # plt.show()
+    plt.savefig('%s.png' % os.path.basename(INPUT_FILENAME).split('.')[0])
+    plt.close()
 
 if __name__ == '__main__':
     main()

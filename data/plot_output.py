@@ -16,8 +16,11 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 import numpy as np
 
+import multiprocessing as mp
+
 NPAD = 15
 SCANRES = 14
+plt.rcParams['axes.formatter.useoffset'] = False
 
 def plot_values(data, fname):
     fig = plt.figure(figsize=(16, 12))
@@ -33,15 +36,14 @@ def main():
     main function
     """
     # Data for plotting
-    plt.rcParams['axes.formatter.useoffset'] = False
-
     arkmat = io_helper.parsefile_ark2mat(sys.argv[1])
-    arkmat = {k: m  for k, m in arkmat.items() if 'longpress' in k}
+    # arkmat = {k: m  for k, m in arkmat.items() if 'longpress' in k}
     arkmat = data_helper.medfilt(arkmat, 3)
     arkmat = data_helper.stripcut(arkmat, 3, 3)
 
-    for uttid, data in arkmat.items():
-        plot_values(data, uttid)
+    jobs = ((data, uttid) for uttid, data in arkmat.items())
+    with mp.Pool(mp.cpu_count()) as pool:
+        pool.starmap(plot_values, jobs)
     
 if __name__ == '__main__':
     main()

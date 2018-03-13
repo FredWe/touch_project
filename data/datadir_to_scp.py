@@ -20,10 +20,12 @@ def main():
     SCP_FILEPATH = args.SCPPATH
     DATA_FILEPATH = args.DATAPATH
     if not SCP_FILEPATH.endswith('.scp'):
-        logging.error('extension error')
-        exit()
+        raise ValueError('extension error')
     logging.debug(SCP_FILEPATH)
     recfiles = glob.glob(os.path.join(DATA_FILEPATH, '**', '*.rec'), recursive=True)
+    for filepath in recfiles:
+        if ' ' in filepath:
+            raise ValueError('%s\nthis filepath contains space' % filepath)
     scps = (
         '%s %s' % (path2uttid(filepath), filepath)
         for filepath in recfiles

@@ -4,6 +4,7 @@ import numpy as np
 
 NPAD = 15
 SCANRES = 14
+plt.rcParams['axes.formatter.useoffset'] = False
 
 def plot_values(data, fname):
     fig = plt.figure(figsize=(16, 12))
