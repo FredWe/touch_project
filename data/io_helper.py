@@ -70,13 +70,15 @@ def outputfile_mat2ark(mat, filepath):
     if not filepath.endswith('.ark'):
         logging.error('extension error')
         return
-    with kaldi_io.open_or_fd(filepath,'wb') as f:
+    with kaldi_io.open_or_fd(filepath, 'wb') as f:
         for k, m in mat.items():
             kaldi_io.write_mat(f, m, k)
 
 def parse_dictfile(filepath):
+    import locale
+    logging.debug(locale.getpreferredencoding())
     retdict = {}
-    with open(filepath, 'r') as filecontent:
+    with open(filepath, 'r', encoding='utf-8') as filecontent:
         for line in filecontent:
             logging.debug(line)
             key, value = line.split()
