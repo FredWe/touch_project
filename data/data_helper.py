@@ -14,7 +14,7 @@ def apply2data(matdict, func):
             ret[key] = func(data)
         except Exception as e:
             print(key + ' cannot find silence')
-            print(key, file=logfilename)
+            print(key, file=open(logfilename, 'a'))
             ret[key] = data
     return ret
 matdict2alldata = lambda matdict: np.concatenate(list(matdict.values()), axis=0)
