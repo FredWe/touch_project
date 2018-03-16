@@ -8,17 +8,14 @@ from sklearn.cluster import KMeans
 #             for key, data in matdict.items()}
 def apply2data(matdict, func):
     logfilename = 'notgood_keylist.log'
-    notgood_keylist = []
     ret = {}
     for key, data in matdict.items():
         try:
             ret[key] = func(data)
         except Exception as e:
             print(key + ' cannot find silence')
-            notgood_keylist.append(key)
+            print(key, file=logfilename)
             ret[key] = data
-    with open(logfilename, 'w') as file_data:
-        file_data.write('\n'.join(notgood_keylist))
     return ret
 matdict2alldata = lambda matdict: np.concatenate(list(matdict.values()), axis=0)
 

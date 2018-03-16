@@ -21,6 +21,13 @@ def _pol2cart(rho, phi):
     y_cart = rho * np.sin(phi)
     return (x_cart, y_cart)
 
+def _sorted_colors(colors):
+    """
+    shift to adapt to actual layout
+    """
+    ret = np.array(colors[11::-1] + [colors[-3], colors[-1], colors[-2]])
+    return ret
+
 def waitforbuttonpress():
     plt.waitforbuttonpress()
 
@@ -51,8 +58,7 @@ class Plotter(object):
             (sigs[i] - state['min'][i]) / (state['max'][i] - state['min'][i])
             for i in range(15)]
 
-        patch_collection.set_array(
-            np.array(colors[-4::-1] + colors[-3:])) # shift to adapt to actual layout
+        patch_collection.set_array(_sorted_colors(colors))
         return patch_collection,
 
     @staticmethod
@@ -87,8 +93,7 @@ class Plotter(object):
             (sigs[i] - state['min'][i]) / (state['max'][i] - state['min'][i])
             for i in range(15)]
 
-        patch_collection.set_array(
-            np.array(colors[-4::-1] + colors[-3:])) # shift to adapt to actual layout
+        patch_collection.set_array(_sorted_colors(colors))
         return patch_collection,
 
     def plot(self, data):
@@ -96,17 +101,21 @@ class Plotter(object):
         reuse plotting code for polymorphism
         """
         theta = np.linspace(-75, 285, 13)
-        theta_intern = np.linspace(45, 405, 4)
+        theta_intern = np.linspace(-75, 285, 4)
 
-        fig = plt.figure()
+        fig = plt.figure(figsize=(12, 9))
         pltaxe = plt.axes(aspect='equal')
+        pltaxe.set_xticks([])
+        pltaxe.set_yticks([])
         pltaxe.set_xlim(-1.1, 1.1)
         pltaxe.set_ylim(-1.1, 1.1)
 
         patches = []
+        #outer ring
         patches.extend(
             Wedge((0, 0), 1, theta[i], theta[i+1], width=0.5, color='0')
             for i in range(len(theta) - 1))
+        #inner ring
         patches.extend(
             Wedge((0, 0), 0.5, theta_intern[i], theta_intern[i+1], width=0.5, color='1')
             for i in range(len(theta_intern) - 1))
