@@ -15,7 +15,7 @@ def plot_values(data, fname):
     plt.savefig('%s.png' % fname)
     plt.close()
 
-def hist_values(data, ylogflag):
+def hist_values(data, ylogflag=False):
     fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD, sharex=True)
     for i in range(NPAD):
@@ -40,6 +40,7 @@ def hist_normpdf(data):
 
 def plot_kmeans(data, fname, kmeans, **kw):
     fig = plt.figure(figsize=(16, 12))
+    fig.subplots_adjust(hspace=0)
     axes = fig.subplots(NPAD)
     centers_norm = np.linalg.norm(kmeans.cluster_centers_, axis=1)
     nonsil_index = np.argmax(centers_norm)
@@ -49,5 +50,6 @@ def plot_kmeans(data, fname, kmeans, **kw):
         axes[i].plot(ploted, '-+')
         axes[i].plot(np.arange(len(ploted))[labels == nonsil_index], ploted[labels == nonsil_index], 'r+')
         axes[i].set_ylabel(i)
-    plt.savefig('%s.png' % fname)
+    plt.show()
+    # plt.savefig('%s.png' % fname)
     plt.close()

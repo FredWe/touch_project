@@ -37,8 +37,8 @@ def main():
     """
     # Data for plotting
     arkmat = io_helper.parsefile_ark2mat(sys.argv[1])
-    # arkmat = {k: m  for k, m in arkmat.items() if 'longpress' in k}
-    arkmat = data_helper.medfilt(arkmat, 3)
+    arkmat = {k: m  for k, m in arkmat.items() if 'clockwise' in k or 'countercw' in k}
+    arkmat = data_helper.medfilt(arkmat, 3)  
     arkmat = data_helper.stripcut(arkmat, 3, 3)
 
     jobs = ((data, uttid) for uttid, data in arkmat.items())

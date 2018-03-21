@@ -93,3 +93,16 @@ def silencecut(matdict, utt2word, start_preserved_length, end_preserved_length):
     #     uttid, data = filtered_arkmat.popitem()
     #     plot_helper.plot_kmeans(data, uttid, kmeans)
     return {k: m for name in word2utts for k, m in name2partmatdict(name).items()}
+
+def slide_silencecut(matdict, dist_threshold, start_preserved_length, end_preserved_length):
+    def distcut(name, data, dist_threshold):
+        norms = np.linalg.norm(data[:, :12], axis=1)
+        nonsil_inds = np.arange(data.shape[0])[norms > dist_threshold]
+        try:
+            start = max(0, min(nonsil_inds) - start_preserved_length)
+            end = min(data.shape[0], max(nonsil_inds) + end_preserved_length)
+        except Exception as e:
+            print(name)
+            raise
+        return data[start:end,:]
+    return {k: distcut(k, m, dist_threshold) for k, m in matdict.items()}
