@@ -95,7 +95,7 @@ def silencecut(matdict, utt2word, start_preserved_length, end_preserved_length):
     return {k: m for name in word2utts for k, m in name2partmatdict(name).items()}
 
 def slide_silencecut(matdict, dist_threshold, start_preserved_length, end_preserved_length):
-    def distcut(name, data, dist_threshold):
+    def distcut(data, dist_threshold):
         norms = np.linalg.norm(data[:, :12], axis=1)
         nonsil_inds = np.arange(data.shape[0])[norms > dist_threshold]
         try:
@@ -106,4 +106,5 @@ def slide_silencecut(matdict, dist_threshold, start_preserved_length, end_preser
             end = data.shape[0]
             raise
         return data[start:end,:]
-    return {k: distcut(k, m, dist_threshold) for k, m in matdict.items()}
+    ret = apply2data(matdict, lambda data: distcut(data, dist_threshold))
+    return ret
