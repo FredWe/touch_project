@@ -7,20 +7,21 @@ SCANRES = 14
 plt.rcParams['axes.formatter.useoffset'] = False
 
 def plot_values(data, fname):
+    n_channel = data.shape[1]
     fig = plt.figure(figsize=(16, 12))
-    axes = fig.subplots(NPAD)#, sharey=True)
-    for i in range(NPAD):
+    axes = fig.subplots(n_channel)#, sharey=True)
+    for i in range(n_channel):
         axes[i].plot(data[:, i], '-+')
         axes[i].set_ylabel(i)
     plt.savefig('%s.png' % fname)
     plt.close()
 
-def hist_values(data, ylogflag=False):
+def hist_values(data, log=False, bins=128):
     fig = plt.figure(figsize=(16, 12))
     axes = fig.subplots(NPAD, sharex=True)
     for i in range(NPAD):
         #fig = plt.figure()
-        axes[i].hist(data[:, i], bins=(data.shape[0]//1024), log=ylogflag)
+        axes[i].hist(data[:, i], bins=bins, log=log)
         axes[i].set_ylabel(i)
     plt.show()#block=False)
 

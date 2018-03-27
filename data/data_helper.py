@@ -102,7 +102,8 @@ def slide_silencecut(matdict, dist_threshold, start_preserved_length, end_preser
             start = max(0, min(nonsil_inds) - start_preserved_length)
             end = min(data.shape[0], max(nonsil_inds) + end_preserved_length)
         except Exception as e:
-            print(name)
+            start = 0
+            end = data.shape[0]
             raise
         return data[start:end,:]
     return {k: distcut(k, m, dist_threshold) for k, m in matdict.items()}

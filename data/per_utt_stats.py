@@ -22,7 +22,7 @@ def main():
         'D': 'del',
         'S': 'sub'
     }
-    with open(FILEPATH, 'r') as file_data:
+    with open(FILEPATH, 'r', encoding='utf-8') as file_data:
         for line in file_data:
             arr = line.strip().split()
             if arr[1] == 'op':

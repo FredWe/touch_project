@@ -154,6 +154,14 @@ def gmm_pca(X, name):
     plt.show()
     plt.close()
 
+def project2distspace(data, neighbor=False):
+    sliderdata = data[:, :12]
+    neighborsum = sliderdata + np.roll(sliderdata, -1, axis=1)
+    complement = np.sum(sliderdata, axis=1, keepdims=True) - neighborsum
+    if neighbor:
+        return neighborsum
+    return complement
+
 def main():
     action_names = [
         '_click-button-up_',
@@ -175,6 +183,7 @@ def main():
         # '_click-button-MFB_',
         # '_hush_',
         '_shorthush_']
+    action_name = '_shorthush_'
     arkmat = io_helper.parsefile_ark2mat(sys.argv[1])
     # utt2word = io_helper.parse_dictfile(sys.argv[2])
     
@@ -187,10 +196,10 @@ def main():
     logging.info('mean:\n%s' % datameans)
 
     # arkmat = data_helper.silencecut(arkmat, utt2word, 10, 10)
+    uttid, data = arkmat.popitem()
+    plot_helper.plot_values(project2distspace(data, neighbor=True), uttid)
 
-    # arkmat = data_helper.normalize(arkmat)
-    # arkmat = data_helper.minmax(arkmat)
-    # arkmat = data_helper.drop_negative(arkmat, -10, 0)
+    """
     alldata = np.concatenate(list(arkmat.values()), axis=0)[:, :12]
     norms = np.linalg.norm(alldata, axis=1)
     logging.debug(alldata.shape)
@@ -199,39 +208,50 @@ def main():
     logging.debug(key)
     logging.debug(np.linalg.norm(data[:, :12], axis=1) > 70)
     logging.debug(np.arange(data.shape[0])[np.linalg.norm(data[:, :12], axis=1) > 70])
+    """
     # plot_helper.hist_values(norms, True)
     # plt.hist(norms, bins=1024, log=True)
 
     """
     actionlen = {}
-    for name in action_names:
-        print(name)
-        filtered_arkmat = {k: m for k, m in arkmat.items() if name in k}
-        alldata = np.concatenate(list(filtered_arkmat.values()), axis=0)
-        # kmeans_pca(alldata, name)
-        K = 2
-        kmeans = KMeans(n_clusters=K, random_state=0).fit(alldata)
-        def kmeans_count(data, kmeans):
-            centers_norm = np.linalg.norm(kmeans.cluster_centers_, axis=1)
-            nonsil_label = np.argmax(centers_norm)
-            labels = kmeans.predict(data)
-            nonsil_inds = np.arange(data.shape[0])[labels == nonsil_label]
-            try:
-                start = min(nonsil_inds)
-                end = max(nonsil_inds)
-            except Exception as e:
-                return None
-            # return end - start + 1
-            return None # TODO
+    # for name in action_names:
+        # print(name)
+    filtered_arkmat = {k: m for k, m in arkmat.items() if action_name in k}
+    alldata = np.concatenate(list(filtered_arkmat.values()), axis=0)
+    # kmeans_pca(alldata, name)
+    kmeans = KMeans(n_clusters=2, random_state=0).fit(alldata)
+    def kmeans_count(data, kmeans):
+        val_threhold = 50
+        centers_norm = np.linalg.norm(kmeans.cluster_centers_, axis=1)
+        nonsil_label = np.argmax(centers_norm)
+        labels = kmeans.predict(data)
+        nonsil_inds = np.arange(data.shape[0])[labels == nonsil_label]
+        try:
+            start = min(nonsil_inds)
+            end = max(nonsil_inds)
+        except Exception as e:
+            return 0
+        # return end - start + 1
+        return sum(np.mean(data[start:end+1, :], axis=0) > val_threhold)
+    # nonsils = [kmeans_count(m, kmeans) for m in filtered_arkmat.values() if len(kmeans_count(m, kmeans)) > 0]
+    nonsils = [kmeans_count(m, kmeans) for m in filtered_arkmat.values()]
+    # alldata = np.concatenate(nonsils, axis=0)
+    logging.debug(nonsils)
+    # plot_helper.hist_values(alldata)
+    fig = plt.figure(figsize=(16, 12))
+    # plt.title(name)
+    plt.hist(nonsils, bins=128)#, log=ylogflag)
+    # plt.axvline(np.median(actionlen[name]), color='y', linestyle='dashed', linewidth=2)
+    # plt.text(np.median(actionlen[name]) + 0.1, 20, np.median(actionlen[name]))
     """
-        # plot actions time length distribution
+    
     """
-        nonsil_lens = [kmeans_count(m, kmeans) for m in filtered_arkmat.values() if kmeans_count(m, kmeans) != None]
-        actionlen[name] = nonsil_lens
-        """
-
-        # uttid, data = filtered_arkmat.popitem()
-        # plot_helper.plot_kmeans(data, uttid, kmeans)
+`   # plot actions time length distribution
+    nonsil_lens = [kmeans_count(m, kmeans) for m in filtered_arkmat.values() if kmeans_count(m, kmeans) != None]
+    actionlen[name] = nonsil_lens
+    # uttid, data = filtered_arkmat.popitem()
+    # plot_helper.plot_kmeans(data, uttid, kmeans)
+    """
 
     """
     fig = plt.figure(figsize=(16, 12))
@@ -261,4 +281,5 @@ def main():
 
 if __name__ == '__main__':
     logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.DEBUG)
+    np.set_printoptions(threshold=np.nan)
     main()
