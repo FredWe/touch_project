@@ -1,6 +1,7 @@
 import logging
 import kaldi_io
 import numpy as np
+import os
 
 NPAD = 15
 def parsefile_rec2raw(filepath):
@@ -87,3 +88,8 @@ def parse_dictfile(filepath):
 
 def loadscp(scppath):
     return parse_dictfile(scppath)
+
+def path2uttid(path):
+    PRE1, PRE2 = '[', ']'
+    parr = os.path.basename(path.replace(PRE1, '').replace(PRE2, '')).split('_')
+    return '_'.join(parr[:len(parr) - 1])

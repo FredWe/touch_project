@@ -63,7 +63,7 @@ def drop_negative(matdict, threshold, placehold_value):
     func = lambda data: np.where(data > threshold, data, placehold_value)
     return apply2data(matdict, func)
 
-def silencecut(matdict, utt2word, start_preserved_length, end_preserved_length):
+def nonslide_silencecut(matdict, utt2word, start_preserved_length, end_preserved_length):
     word2utts = invert_dict(utt2word)
     def kmeanscut(data, kmeans):
         centers_norm = np.linalg.norm(kmeans.cluster_centers_, axis=1)
@@ -85,13 +85,6 @@ def silencecut(matdict, utt2word, start_preserved_length, end_preserved_length):
         kmeans = KMeans(n_clusters=2, random_state=0).fit(alldata)
         ret = apply2data(filtered_arkmat, lambda data: kmeanscut(data, kmeans))
         return ret
-    # for name in word2utts:
-    #     filtered_arkmat = {k: m for k, m in matdict.items() if k in word2utts[name]}
-    #     alldata = matdict2alldata(filtered_arkmat)
-    #     kmeans = KMeans(n_clusters=2, random_state=0).fit(alldata)
-    #     filtered_arkmat = apply2data(filtered_arkmat, lambda data: kmeanscut(data, kmeans))
-    #     uttid, data = filtered_arkmat.popitem()
-    #     plot_helper.plot_kmeans(data, uttid, kmeans)
     return {k: m for name in word2utts for k, m in name2partmatdict(name).items()}
 
 def slide_silencecut(matdict, dist_threshold, start_preserved_length, end_preserved_length):
@@ -108,3 +101,10 @@ def slide_silencecut(matdict, dist_threshold, start_preserved_length, end_preser
         return data[start:end,:]
     ret = apply2data(matdict, lambda data: distcut(data, dist_threshold))
     return ret
+
+def silencecut(matdict, utt2word, dist_threshold, start_preserved_length, end_preserved_length):
+    word2utts = invert_dict(utt2word)
+    nonslide_word2utts = {k: v for k, v in word2utts.items() if not k.startwith('增') or not k.startwith('减')}
+    return {k: m for name in word2utts for k, m in name2partmatdict(name).items()}
+    # TODO
+    pass

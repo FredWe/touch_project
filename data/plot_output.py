@@ -37,7 +37,7 @@ def main():
     """
     # Data for plotting
     arkmat = io_helper.parsefile_ark2mat(sys.argv[1])
-    arkmat = {k: m  for k, m in arkmat.items() if '_shorthush_' in k}
+    # arkmat = {k: m  for k, m in arkmat.items() if '_shorthush_' in k}
     # arkmat = {k: m  for k, m in arkmat.items() if 'clockwise' in k or 'countercw' in k}
     arkmat = data_helper.medfilt(arkmat, 3)
     arkmat = data_helper.medfilt(arkmat, 3)

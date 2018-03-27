@@ -2,11 +2,7 @@ import glob
 import logging
 import argparse
 import os
-
-def path2uttid(path):
-    PRE1, PRE2 = '[', ']'
-    parr = os.path.basename(path.replace(PRE1, '').replace(PRE2, '')).split('_')
-    return '_'.join(parr[:len(parr) - 1])
+import io_helper
 
 def main():
     logging.basicConfig(format='[%(filename)s:%(lineno)d] %(message)s', level=logging.WARN)
@@ -27,7 +23,7 @@ def main():
         if ' ' in filepath:
             raise ValueError('%s\nthis filepath contains space' % filepath)
     scps = (
-        '%s %s' % (path2uttid(filepath), filepath)
+        '%s %s' % (io_helper.path2uttid(filepath), filepath)
         for filepath in recfiles
         if os.path.getsize(filepath) > 0) # non-empty files
     with open(SCP_FILEPATH, 'w') as fd:
