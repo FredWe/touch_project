@@ -107,7 +107,7 @@ def silencecut(matdict, utt2word, dist_threshold, start_preserved_length, end_pr
     slide_matdict, nonslide_matdict = {}, {}
     #split data/utt2word
     for utt, word in utt2word.items():
-        if word.startwith('增') or word.startwith('减'):
+        if word.startswith('增') or word.startswith('减'):
             slide_utt2word[utt] = word
             slide_matdict[utt] = matdict[utt]
         else:
