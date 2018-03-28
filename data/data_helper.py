@@ -103,8 +103,17 @@ def slide_silencecut(matdict, dist_threshold, start_preserved_length, end_preser
     return ret
 
 def silencecut(matdict, utt2word, dist_threshold, start_preserved_length, end_preserved_length):
-    word2utts = invert_dict(utt2word)
-    nonslide_word2utts = {k: v for k, v in word2utts.items() if not k.startwith('增') or not k.startwith('减')}
-    return {k: m for name in word2utts for k, m in name2partmatdict(name).items()}
-    # TODO
-    pass
+    slide_utt2word, nonslide_utt2word = {}, {}
+    slide_matdict, nonslide_matdict = {}, {}
+    #split data/utt2word
+    for utt, word in utt2word.items():
+        if word.startwith('增') or word.startwith('减'):
+            slide_utt2word[utt] = word
+            slide_matdict[utt] = matdict[utt]
+        else:
+            nonslide_utt2word[utt] = word
+            nonslide_matdict[utt] = matdict[utt]
+    slide_matdict = slide_silencecut(slide_matdict, dist_threshold, start_preserved_length, end_preserved_length)
+    nonslide_matdict = nonslide_silencecut(nonslide_matdict, nonslide_utt2word, start_preserved_length, end_preserved_length)
+    ret = {**slide_matdict, **nonslide_matdict}
+    return ret
