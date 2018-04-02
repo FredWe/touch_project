@@ -11,13 +11,16 @@ import logging
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import io_helper
 
+plt.rcParams['axes.formatter.useoffset'] = False
 
 NSIGS = 17
 NPAD = 15
 NCLICKER = 3
 NSLIDER = 12
 INPUT_FILENAME = sys.argv[1]
+OUTTYPE = sys.argv[2]
 EXT = INPUT_FILENAME.split('.')[-1]
 CONF = {
     'txt': {
@@ -67,6 +70,7 @@ def treatline(line):
 
 def plot_values(data):
     fig = plt.figure(figsize=(16, 12))
+    fig.subplots_adjust(hspace=0)
     axes = fig.subplots(data.shape[1])
     for i in range(data.shape[1]):
         axes[i].plot(data[:, i], '-+')
@@ -111,13 +115,13 @@ def main():
         else:
             data = np.loadtxt(file_data, delimiter=',')
 
-    print(data[:, 1].shape)
+    logging.debug(data[:, 1].shape)
+
+    data = io_helper.parsefile(INPUT_FILENAME, OUTTYPE)
 
     plot_values(data) # plot diff signals
     # plot_rawvalues(rawdata) # plot raw & baselines
-    # plt.show()
-    plt.savefig('%s.png' % os.path.basename(INPUT_FILENAME).split('.')[0])
-    plt.close()
+    plt.show()
 
 if __name__ == '__main__':
     main()
