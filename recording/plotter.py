@@ -67,9 +67,15 @@ class Plotter(object):
         start data collection
         """
         rawline = dataq.get()
-        rawline = bytes_filter(rawline)
+        # rawline = bytes_filter(rawline)
         rawbytes = rawline.split() # read data from queue
-        #print(rawbytes)
+
+        # print(rawbytes)
+        if len(rawbytes) != 15:
+            return (patch_collection,)
+        sigs = [int(raw) for raw in rawbytes]
+        
+        """
         if len(rawbytes) != 63:
             return patch_collection,
         rawbytes.insert(-3, b'00') # align to decode
@@ -83,6 +89,7 @@ class Plotter(object):
             print(ex)
         # concat high byte & low byte and convert from HEX to DEC
         sigs = [rawsigs[i] - rawsigs[i+1] for i in range(0, len(rawsigs) - 2, 2)] + rawsigs[-2:]
+        """
 
         for i in range(15):
             state['buf'][i].append(sigs[i])
@@ -149,9 +156,10 @@ class Plotter(object):
         elif self.sourcetype == 'queue':
             NPAD = 15
             ringBuf = [collections.deque(maxlen=3) for i in range(NPAD)]
+            minv = [27250, 26050, 27150, 25750, 26050, 28050, 26950, 27650, 27750, 27150, 27850, 26350, 27050, 26750, 26650]
             state = {
-                'min': [0] * NPAD,
-                'max': [1] * NPAD,
+                'min': minv,
+                'max': [m + 1 for m in minv],
                 'buf': ringBuf
             }
 

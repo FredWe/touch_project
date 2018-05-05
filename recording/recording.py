@@ -20,14 +20,16 @@ import speechd
 import plotter
 
 GESTURES_DICT = {
-    'click': '单击',
-    'double-click': '双击小鸟',
-    'longpress': '长按小鸟',
-    'hush': 'HUSH',
-    'shorthush': '轻拍',
-    'double-shorthush': '轻拍两下',
-    'clockwise': '顺时针',
-    'countercw': '逆时针'}
+    # 'click': '单击',
+    # 'double-click': '双击小鸟',
+    # 'longpress': '长按小鸟',
+    # 'hush': 'HUSH',
+    # 'shorthush': '轻拍',
+    # 'double-shorthush': '轻拍两下',
+    # 'clockwise': '顺时针',
+    # 'countercw': '逆时针',
+    'filler': '瞎划拉',
+    }
 BUTTONS_DICT = {
     'button-MFB': '小鸟',
     'button-up': '[6]',
@@ -37,14 +39,16 @@ BUTTONS_DICT = {
     'button-leftup': '[4]',
     'button-rightup': '[8]',
     'button-leftdown': '[2]',
-    'button-rightdown': '[10]'}
+    'button-rightdown': '[10]',
+    }
 PRONOUNCE_DICT = {
     'HUSH': 'ha4shi',
     '10': '十',
     '11': '十一',
     '12': '十二',
     ']-[': '到',
-    '逆时针': 'ni4时针'}
+    '逆时针': 'ni4时针',
+    }
 ROUNDLEN = 12
 SAMPLEN = 6
 SLIDE_SAMPLEN = 2
@@ -220,16 +224,20 @@ def actionlist(username):
     else:
         # add clockwise/counterCW gestures ROUNDLEN * SLIDE_SAMPLEN,
         # start position randomly generated
-        clockwises = slides('clockwise', username)
-        countercws = slides('countercw', username)
-        singleclicks = clicks(username)
-        action_list.extend(clockwises)
-        action_list.extend(countercws)
-        nonslides = singleclicks + [
+        nonslides = [
             '%s_%s' % (username, item)
             for item in GESTURES_DICT
             if item not in ('click', 'clockwise', 'countercw')
             for i in range(SAMPLEN)]
+        clockwises = slides('clockwise', username)
+        countercws = slides('countercw', username)
+        singleclicks = clicks(username)
+        if 'click' in GESTURES_DICT:
+            nonslides.extend(singleclicks)
+        if 'clockwise' in GESTURES_DICT:
+            action_list.extend(clockwises)
+        if 'countercw' in GESTURES_DICT:
+            action_list.extend(countercws)        
         random.shuffle(nonslides)
         random_insert_seq(action_list, nonslides)
         action_list = ['%s_%d'% (item, ind)
@@ -273,7 +281,7 @@ def main():
     name_queue = multiprocessing.Queue(1)
     data_queue = multiprocessing.Queue()
 
-    plter = plotter.Plotter(2, 'queue')
+    plter = plotter.Plotter(4, 'queue')
 
     data_process = multiprocessing.Process(
         target=delayout, args=(state_queue, name_queue, data_queue))
@@ -283,7 +291,7 @@ def main():
     draw_process.start()
 
     actions = actionlist(USERNAME)
-    #print(actions)
+    # logging.debug(actions)
 
     inkey = ''
     idx = None
@@ -298,6 +306,7 @@ def main():
         print(
             '[-] 做完动作之后，按 %s 保存。按 %s 退出' %
             (ENDKEY, QUITKEY))
+
         print('main: input --> ', end='')
         sys.stdout.flush()
         while True:
@@ -309,16 +318,16 @@ def main():
             if inkey == QUITKEY:
                 break
             elif inkey == STARTKEY:
-                state_queue.put_nowait(inkey)
+                state_queue.put(inkey)
             elif inkey == ENDKEY:
-                name_queue.put_nowait(val)
-                state_queue.put_nowait(inkey)
+                name_queue.put(val)
+                state_queue.put(inkey)
                 break
 
         if inkey == QUITKEY: # let QUITKEY break to the most outer loop
             break
 
-        time.sleep(.1) # add a delay to make display in more natural order
+        # time.sleep(.1) # add a delay to make display in more natural order
 
     with open('%s.actionlist' % USERNAME, 'w') as file_actionlist:
         if inkey == QUITKEY:

@@ -117,3 +117,18 @@ def silencecut(matdict, utt2word, dist_threshold, start_preserved_length, end_pr
     nonslide_matdict = nonslide_silencecut(nonslide_matdict, nonslide_utt2word, start_preserved_length, end_preserved_length)
     ret = {**slide_matdict, **nonslide_matdict}
     return ret
+
+def neo_silencecut(matdict, dist_threshold, start_preserved_length, end_preserved_length):
+    def distcut(data, dist_threshold):
+        maxv = np.max(data[:, :15], axis=1)
+        nonsil_inds = np.arange(data.shape[0])[maxv > dist_threshold]
+        try:
+            start = max(0, min(nonsil_inds) - start_preserved_length)
+            end = min(data.shape[0], max(nonsil_inds) + end_preserved_length)
+        except Exception as e:
+            start = 0
+            end = data.shape[0]
+            raise
+        return data[start:end,:]
+    ret = apply2data(matdict, lambda data: distcut(data, dist_threshold))
+    return ret

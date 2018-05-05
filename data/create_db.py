@@ -52,7 +52,8 @@ def main():
         data_raw    ARRAY,\
         data_baseline   ARRAY,\
         data_diff   ARRAY   NOT NULL,\
-        data_ticking ARRAY,\
+        data_emitterTicking ARRAY,\
+        data_receiverTicking ARRAY,\
         data_onMask ARRAY\
         )")
 
