@@ -31,11 +31,10 @@ def parsefile(filepath, outtype='raw'):
     with open(filepath, 'r') as file_data:
         for line in file_data:
             rawstrs = line.strip().split()
-            raws, baselines, diffs, timers = [], [], [], []
+            raws, baselines, diffs, timers, sigs = [], [], [], [], []
 
-            if not rawstrs or len(rawstrs) != 63 or len(rawstrs) != 15: # remove empty line
-                continue
-            elif len(rawstrs) == 63:
+            if len(rawstrs) == 63:
+                print(63)
                 rawbytes = [
                     onebyte.zfill(2)
                     for onebyte in rawstrs]
@@ -52,9 +51,13 @@ def parsefile(filepath, outtype='raw'):
                         for idx in range(NPAD)]
                 timers = [rawbytes[NPAD * 4]]
             elif len(rawstrs) == 15:
+                print(15)
                 raws = [int(raw) for raw in rawstrs]
+                #print(raws)
+            else:
+                print('continue')
+                continue
 
-            sigs = []
             if outtype == 'raw':
                 sigs = raws
             elif outtype == 'diff':
