@@ -19,6 +19,7 @@ import serial
 import speechd
 import plotter
 
+"""
 GESTURES_DICT = {
     # 'click': '单击',
     # 'double-click': '双击小鸟',
@@ -49,6 +50,19 @@ PRONOUNCE_DICT = {
     ']-[': '到',
     '逆时针': 'ni4时针',
     }
+"""    
+GESTURES_DICT = {
+    'slipt': '侧划',
+    'triple-click': '三击',
+    'triple-shorthush': '轻拍三下'，
+    'longpress': '长按小鸟',
+    'longpress-click-leftdown': '长按soundspace',
+    'longpress-click-down': '长按心' }
+BUTTONS_DICT = {
+    }
+PRONOUNCE_DICT = {
+}
+
 ROUNDLEN = 12
 SAMPLEN = 6
 SLIDE_SAMPLEN = 2
@@ -227,8 +241,9 @@ def actionlist(username):
         nonslides = [
             '%s_%s' % (username, item)
             for item in GESTURES_DICT
-            if item not in ('click', 'clockwise', 'countercw')
+            #if item not in ('click', 'clockwise', 'countercw')
             for i in range(SAMPLEN)]
+        """
         clockwises = slides('clockwise', username)
         countercws = slides('countercw', username)
         singleclicks = clicks(username)
@@ -237,7 +252,8 @@ def actionlist(username):
         if 'clockwise' in GESTURES_DICT:
             action_list.extend(clockwises)
         if 'countercw' in GESTURES_DICT:
-            action_list.extend(countercws)        
+            action_list.extend(countercws)  
+        """      
         random.shuffle(nonslides)
         random_insert_seq(action_list, nonslides)
         action_list = ['%s_%d'% (item, ind)
