@@ -34,7 +34,6 @@ def parsefile(filepath, outtype='raw'):
             raws, baselines, diffs, timers, sigs = [], [], [], [], []
 
             if len(rawstrs) == 63:
-                print(63)
                 rawbytes = [
                     onebyte.zfill(2)
                     for onebyte in rawstrs]
@@ -51,11 +50,9 @@ def parsefile(filepath, outtype='raw'):
                         for idx in range(NPAD)]
                 timers = [rawbytes[NPAD * 4]]
             elif len(rawstrs) == 15:
-                print(15)
                 raws = [int(raw) for raw in rawstrs]
                 #print(raws)
             else:
-                print('continue')
                 continue
 
             if outtype == 'raw':
