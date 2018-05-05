@@ -31,8 +31,7 @@ def _sorted_colors(colors):
 def waitforbuttonpress():
     plt.waitforbuttonpress()
 
-def bytes_filter(byteline):
-    keptchars = '0123456789 ABCDEFabcdef'
+def bytes_filter(byteline, keptchars = '0123456789 ABCDEFabcdef'):
     delcharcodes = (x for x in range(256) if chr(x) not in keptchars)
     return byteline.translate(None, bytes(delcharcodes))
 
@@ -67,7 +66,7 @@ class Plotter(object):
         start data collection
         """
         rawline = dataq.get()
-        # rawline = bytes_filter(rawline)
+        rawline = bytes_filter(rawline)
         rawbytes = rawline.split() # read data from queue
 
         # print(rawbytes)

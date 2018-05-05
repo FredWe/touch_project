@@ -30,23 +30,30 @@ def parsefile(filepath, outtype='raw'):
     logging.debug(filepath)
     with open(filepath, 'r') as file_data:
         for line in file_data:
-            rawbytes = [
-                onebyte.zfill(2)
-                for onebyte in line.strip().split()]
-            logging.debug(rawbytes)
-            logging.debug(len(rawbytes))
-            if not rawbytes or len(rawbytes) != 63: # remove empty line
+            rawstrs = line.strip().split()
+            raws, baselines, diffs, timers = [], [], [], []
+
+            if not rawstrs or len(rawstrs) != 63 or len(rawstrs) != 15: # remove empty line
                 continue
-            raws = [
-                    int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)
-                    for idx in range(NPAD)]
-            baselines = [
-                    int(rawbytes[idx * 4 + 2] + rawbytes[idx * 4 + 3], 16)
-                    for idx in range(NPAD)]
-            diffs = [
-                    raws[idx] - baselines[idx]
-                    for idx in range(NPAD)]
-            timers = [rawbytes[NPAD * 4]]
+            elif len(rawstrs) == 63:
+                rawbytes = [
+                    onebyte.zfill(2)
+                    for onebyte in rawstrs]
+                logging.debug(rawbytes)
+                logging.debug(len(rawbytes))
+                raws = [
+                        int(rawbytes[idx * 4] + rawbytes[idx * 4 + 1], 16)
+                        for idx in range(NPAD)]
+                baselines = [
+                        int(rawbytes[idx * 4 + 2] + rawbytes[idx * 4 + 3], 16)
+                        for idx in range(NPAD)]
+                diffs = [
+                        raws[idx] - baselines[idx]
+                        for idx in range(NPAD)]
+                timers = [rawbytes[NPAD * 4]]
+            elif len(rawstrs) == 15:
+                raws = [int(raw) for raw in rawstrs]
+
             sigs = []
             if outtype == 'raw':
                 sigs = raws

@@ -64,7 +64,7 @@ PRONOUNCE_DICT = {
 }
 
 ROUNDLEN = 12
-SAMPLEN = 6
+SAMPLEN = 10
 SLIDE_SAMPLEN = 2
 STARTKEY = 's'
 ENDKEY = 'e'
@@ -343,7 +343,7 @@ def main():
         if inkey == QUITKEY: # let QUITKEY break to the most outer loop
             break
 
-        # time.sleep(.1) # add a delay to make display in more natural order
+        time.sleep(.1) # add a delay to make display in more natural order
 
     with open('%s.actionlist' % USERNAME, 'w') as file_actionlist:
         if inkey == QUITKEY:
