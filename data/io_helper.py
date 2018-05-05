@@ -34,6 +34,7 @@ def parsefile(filepath, outtype='raw'):
             raws, baselines, diffs, timers, sigs = [], [], [], [], []
 
             if len(rawstrs) == 63:
+
                 rawbytes = [
                     onebyte.zfill(2)
                     for onebyte in rawstrs]
@@ -51,7 +52,6 @@ def parsefile(filepath, outtype='raw'):
                 timers = [rawbytes[NPAD * 4]]
             elif len(rawstrs) == 15:
                 raws = [int(raw) for raw in rawstrs]
-                #print(raws)
             else:
                 continue
 
@@ -80,6 +80,8 @@ def outputfile_mat2ark(mat, filepath):
         return
     with kaldi_io.open_or_fd(filepath, 'wb') as f:
         for k, m in mat.items():
+            if 0 in m.shape:
+                continue
             kaldi_io.write_mat(f, m, k)
 
 def parse_dictfile(filepath):
