@@ -54,7 +54,7 @@ PRONOUNCE_DICT = {
 GESTURES_DICT = {
     'slipt': '侧划',
     'triple-click': '三击',
-    'triple-shorthush': '轻拍三下'，
+    'triple-shorthush': '轻拍三下',
     'longpress': '长按小鸟',
     'longpress-click-leftdown': '长按soundspace',
     'longpress-click-down': '长按心' }
